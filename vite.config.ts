@@ -11,7 +11,14 @@ export default defineConfig(({ mode }) => {
   const envs = { ...process.env, ...loadEnv(mode, process.cwd()) }
 
   return {
-    plugins: [vue(), vueJsx(), vueDevTools(), tailwindcss()],
+    plugins: [
+      vue(),
+      vueJsx(),
+      vueDevTools({
+        launchEditor: 'webstorm',
+      }),
+      tailwindcss(),
+    ],
     server: {
       port: Number(envs.VITE_PORT),
     },
