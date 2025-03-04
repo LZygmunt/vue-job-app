@@ -1,0 +1,41 @@
+@import "tailwindcss";
+
+@theme {
+    --font-sans: Inter,
+    -apple-system,
+    BlinkMacSystemFont,
+    'Segoe UI',
+    Roboto,
+    Oxygen,
+    Ubuntu,
+    Cantarell,
+    'Fira Sans',
+    'Droid Sans',
+    'Helvetica Neue',
+    sans-serif;
+}
+
+body {
+    @apply bg-neutral-50 text-neutral-900 dark:bg-neutral-900 dark:text-neutral-50;
+}
+
+h2 {
+    @apply text-2xl font-bold;
+}
+
+a {
+    @apply no-underline
+        transition-colors
+        duration-40
+        dark:text-green-500
+    ;
+}
+.router-link-exact-active, .router-link-active {
+    @apply no-underline
+        transition-all
+        duration-40
+        dark:text-green-500
+        rounded-xs
+        border-b
+        dark:border-b-green-500;
+}
