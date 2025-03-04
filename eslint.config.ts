@@ -21,7 +21,11 @@ export default defineConfigWithVueTs(
 
   pluginVue.configs['flat/recommended'],
   vueTsConfigs.recommended,
-
+  {
+    rules: {
+      "vue/attribute-hyphenation": ["error", 'never']
+    }
+  },
   {
     ...pluginVitest.configs.recommended,
     files: ['src/**/__tests__/*'],
