@@ -45,5 +45,21 @@ const jobs = ref(jsonJobs.jobs.slice(0, 3))
       </ActionCard>
     </section>
     <JobJobBrowseSection :jobs="jobs" />
+    <section class="text-center py-8">
+      <BaseRedirectButton
+        class="view-all-button w-1/3"
+        label="View All Jobs"
+        redirectTo="/jobs"
+        variant="secondary"
+      />
+    </section>
   </main>
 </template>
+
+<style scoped>
+@reference '#/assets/main.css';
+
+.view-all-button {
+  @apply py-4;
+}
+</style>
