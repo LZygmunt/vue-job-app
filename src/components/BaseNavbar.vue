@@ -29,12 +29,16 @@ header {
     justify-between
     px-10
     py-5.5
+    sticky
+    top-0
+    shadow-md
+    shadow-green-500/50
     border-b
     text-neutral-50
     bg-green-700
     border-b-green-500
     dark:text-green-500
-    dark:bg-transparent;
+    dark:bg-neutral-900;
 }
 
 h2 {
