@@ -47,7 +47,21 @@ nav {
     gap-1;
 
   a {
-    @apply px-2 py-1;
+    @apply px-2
+      py-1
+      rounded-xs
+      hover:bg-green-800
+      hover:dark:bg-neutral-800;
   }
+}
+
+.router-link-exact-active,
+.router-link-active {
+  @apply no-underline
+  transition-all
+  duration-40
+  dark:text-green-500
+  border-b
+  dark:border-b-green-500;
 }
 </style>

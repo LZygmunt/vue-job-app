@@ -2,6 +2,11 @@
 import ActionCard from '#/components/ActionCard.vue'
 import BaseBanner from '#/components/BaseBanner.vue'
 import BaseRedirectButton from '#/components/BaseRedirectButton.vue'
+import JobJobBrowseSection from '#/components/JobBrowseSection.vue'
+import { ref } from 'vue'
+import jsonJobs from '../../jobs.json'
+
+const jobs = ref(jsonJobs.jobs.slice(0, 3))
 </script>
 
 <template>
@@ -21,6 +26,7 @@ import BaseRedirectButton from '#/components/BaseRedirectButton.vue'
         variant="secondary"
       >
         <BaseRedirectButton
+          class="mt-2"
           label="Browse Jobs"
           redirectTo="/jobs"
           variant="secondary"
@@ -32,13 +38,12 @@ import BaseRedirectButton from '#/components/BaseRedirectButton.vue'
         description="List your job to find the perfect developer for the role "
       >
         <BaseRedirectButton
+          class="mt-2"
           label="Add Job"
           redirectTo="/jobs/add"
         />
       </ActionCard>
     </section>
-    <section>
-      <h2>Browse Jobs</h2>
-    </section>
+    <JobJobBrowseSection :jobs="jobs" />
   </main>
 </template>

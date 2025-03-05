@@ -15,6 +15,11 @@
     sans-serif;
 }
 
+* {
+    @apply transition-colors
+        duration-100
+        ease-in-out;
+}
 body {
     @apply bg-neutral-50 text-neutral-900 dark:bg-neutral-900 dark:text-neutral-50;
 }
@@ -30,12 +35,10 @@ a {
         dark:text-green-500
     ;
 }
-.router-link-exact-active, .router-link-active {
-    @apply no-underline
-        transition-all
-        duration-40
-        dark:text-green-500
-        rounded-xs
-        border-b
-        dark:border-b-green-500;
+button,
+[role="button"] {
+    @apply cursor-pointer;
+}
+:root {
+    interpolate-size: allow-keywords;
 }
