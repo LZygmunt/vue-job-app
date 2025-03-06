@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import JobBrowseSection from '#/components/JobBrowseSection.vue'
 import { ref } from 'vue'
-import jsonJobs from '../../jobs.json'
+import jsonJobs from '#/db.json'
 
 const jobs = ref(jsonJobs.jobs)
 </script>

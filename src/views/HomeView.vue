@@ -4,7 +4,7 @@ import BaseBanner from '#/components/BaseBanner.vue'
 import BaseRedirectButton from '#/components/BaseRedirectButton.vue'
 import JobJobBrowseSection from '#/components/JobBrowseSection.vue'
 import { ref } from 'vue'
-import jsonJobs from '../../jobs.json'
+import jsonJobs from '#/db.json'
 
 const jobs = ref(jsonJobs.jobs.slice(0, 3))
 </script>
