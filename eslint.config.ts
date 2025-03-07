@@ -23,6 +23,7 @@ export default defineConfigWithVueTs(
   vueTsConfigs.recommended,
   {
     rules: {
+      "arrow-body-style": ["error"],
       "vue/attribute-hyphenation": ["error", 'never']
     }
   },
