@@ -23,10 +23,11 @@ import JobBrowseSection from '#/components/JobBrowseSection.vue'
       >
         <BaseRedirectButton
           class="mt-2"
-          label="Browse Jobs"
           redirectTo="/jobs"
           variant="secondary"
-        />
+        >
+          Browse Jobs
+        </BaseRedirectButton>
       </ActionCard>
       <ActionCard
         class="p-6"
@@ -35,19 +36,21 @@ import JobBrowseSection from '#/components/JobBrowseSection.vue'
       >
         <BaseRedirectButton
           class="mt-2"
-          label="Add Job"
           redirectTo="/jobs/add"
-        />
+        >
+          Add Job
+        </BaseRedirectButton>
       </ActionCard>
     </section>
     <JobBrowseSection :limit="3" />
     <section class="text-center py-8">
       <BaseRedirectButton
         class="view-all-button w-1/3"
-        label="View All Jobs"
         redirectTo="/jobs"
         variant="secondary"
-      />
+      >
+        View All Jobs
+      </BaseRedirectButton>
     </section>
   </main>
 </template>

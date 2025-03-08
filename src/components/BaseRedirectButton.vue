@@ -2,12 +2,11 @@
 import { reactive } from 'vue'
 
 interface BaseRedirectButtonProps {
-  label: string
   redirectTo: string
   variant?: 'primary' | 'secondary'
   class?: string
 }
-const { label, redirectTo, variant = 'primary', class: className } = defineProps<BaseRedirectButtonProps>()
+const { redirectTo, variant = 'primary', class: className } = defineProps<BaseRedirectButtonProps>()
 const redirectButtonClass = reactive([{ secondary: variant === 'secondary' }, className])
 </script>
 
@@ -16,7 +15,7 @@ const redirectButtonClass = reactive([{ secondary: variant === 'secondary' }, cl
     :to="redirectTo"
     :class="redirectButtonClass"
   >
-    {{ label }}
+    <slot></slot>
   </RouterLink>
 </template>
 

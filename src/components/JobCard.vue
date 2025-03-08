@@ -36,10 +36,9 @@ const { title, type, location, description, salary, id } = defineProps<JobCardPr
       </span>
     </template>
     <template #readMore>
-      <BaseRedirectButton
-        label="Read More"
-        :redirectTo="`/jobs/${id}`"
-      />
+      <BaseRedirectButton :redirectTo="`/jobs/${id}`">
+        Read More
+      </BaseRedirectButton>
     </template>
   </JobCardWrapper>
 </template>
