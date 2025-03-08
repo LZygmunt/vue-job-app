@@ -2,11 +2,7 @@
 import ActionCard from '#/components/ActionCard.vue'
 import BaseBanner from '#/components/BaseBanner.vue'
 import BaseRedirectButton from '#/components/BaseRedirectButton.vue'
-import JobJobBrowseSection from '#/components/JobBrowseSection.vue'
-import { ref } from 'vue'
-import jsonJobs from '#/db.json'
-
-const jobs = ref(jsonJobs.jobs.slice(0, 3))
+import JobBrowseSection from '#/components/JobBrowseSection.vue'
 </script>
 
 <template>
@@ -44,7 +40,7 @@ const jobs = ref(jsonJobs.jobs.slice(0, 3))
         />
       </ActionCard>
     </section>
-    <JobJobBrowseSection :jobs="jobs" />
+    <JobBrowseSection :limit="3" />
     <section class="text-center py-8">
       <BaseRedirectButton
         class="view-all-button w-1/3"

@@ -1,14 +1,8 @@
 <script setup lang="ts">
-import BaseCard from './BaseCard.vue'
+import JobCardWrapper from './JobCardWrapper.vue'
 import BaseRedirectButton from './BaseRedirectButton.vue'
 import TruncateText from './TruncateText.vue'
 
-interface Company {
-  name: string
-  description: string
-  contactEmail: string
-  contactPhone: string
-}
 export interface JobOffer {
   id: string
   title: string
@@ -16,35 +10,38 @@ export interface JobOffer {
   location: string
   description: string
   salary: string
-  company: Company
 }
 export type JobOffers = JobOffer[]
 type JobCardProps = JobOffer
 const { title, type, location, description, salary, id } = defineProps<JobCardProps>()
+// ToDo #1: introduce old-fashion pagination
+// ToDo #2: introduce infinity scroll pagination
+// ToDo #3: introduce possibility to switch between them
 </script>
 
 <template>
-  <BaseCard class="bg-white dark:bg-neutral-700 p-4 flex flex-col justify-between gap-4">
-    <div class="flex flex-col gap-4">
+  <JobCardWrapper>
+    <template #mainDetails>
       <span>{{ type }}</span>
       <span class="font-bold text-xl">{{ title }}</span>
       <TruncateText>{{ description }}</TruncateText>
-    </div>
-    <div class="flex flex-col">
+    </template>
+    <template #salary>
       <span class="text-green-500">{{ salary }}</span>
-      <hr class="my-4 border-gray-500" />
-      <div class="flex justify-between items-center">
-        <span>
-          <i class="pi pi-map-marker" />
-          {{ location }}
-        </span>
-        <BaseRedirectButton
-          label="Read More"
-          :redirectTo="`/jobs/${id}`"
-        />
-      </div>
-    </div>
-  </BaseCard>
+    </template>
+    <template #location>
+      <span>
+        <i class="pi pi-map-marker" />
+        {{ location }}
+      </span>
+    </template>
+    <template #readMore>
+      <BaseRedirectButton
+        label="Read More"
+        :redirectTo="`/jobs/${id}`"
+      />
+    </template>
+  </JobCardWrapper>
 </template>
 
 <style scoped></style>
