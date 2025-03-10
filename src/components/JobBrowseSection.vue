@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import type { SearchParams } from '#/api/utils/types.ts'
-import JobCardFooter from '#/components/JobCardFooter.vue'
+import type { SearchParams } from '#/api/utils/utilTypes.ts'
+import JobCardFooter from './JobCardFooter.vue'
 import JobCardWrapper from './JobCardWrapper.vue'
 import JobSuspendable from './JobSuspendable.vue'
 

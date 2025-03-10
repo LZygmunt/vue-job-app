@@ -1,31 +1,8 @@
-import type { SearchParams } from '#/api/utils/types.ts'
+import { MINUTE } from '#/constans.ts'
+import type { JobOfferDTO } from './jobDTO.ts'
+import type { PaginatedList } from './types.ts'
+import type { SearchParams } from './utils/utilTypes.ts'
 import useGet from './useGet.ts'
-
-interface CompanyDTO {
-  name: string
-  description: string
-  contactEmail: string
-  contactPhone: string
-}
-interface JobOfferDTO {
-  id: string
-  title: string
-  type: string
-  location: string
-  description: string
-  salary: string
-  company: CompanyDTO
-}
-
-interface PaginatedList<DTO> {
-  first: number
-  prev: number | null
-  next: number | null
-  last: number
-  pages: number
-  items: number
-  data: DTO[]
-}
 
 export type JobOffersDTO =
   | JobOfferDTO[]
@@ -36,12 +13,13 @@ export interface UseGetJobsOptions<TJobs> {
   select?: (data: JobOffersDTO) => TJobs,
 }
 
-const MINUTE = 60 * 1000
+const ENDPOINT = '/jobs' as const
+
 const useGetJobs = <TJobs>({
   searchParams,
   select,
-}: UseGetJobsOptions<TJobs>) => useGet<JobOffersDTO, TJobs>(
-  '/jobs',
+}: UseGetJobsOptions<TJobs>) => useGet<JobOffersDTO, TJobs, [], typeof ENDPOINT>(
+  ENDPOINT,
   {
     searchParams,
     staleTime: 5 * MINUTE,

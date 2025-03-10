@@ -1,12 +1,12 @@
 <script setup lang="ts">
-import type { SearchParams } from '#/api/utils/types.ts'
+import type { SearchParams } from '#/api/utils/utilTypes.ts'
 import { computed } from 'vue'
 import useGetJobs from '#/api/useGetJobs.ts'
 import JobCard, { type JobOffer, type JobOffers } from '#/components/JobCard.vue'
 
 const searchParamsProps = defineProps<SearchParams>()
 
-const { data, suspense } = useGetJobs( {
+const { data, suspense } = useGetJobs({
   searchParams: searchParamsProps,
   select: ( data ) => {
     const jobs = Array.isArray(data) ? data : data.data

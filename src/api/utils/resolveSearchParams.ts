@@ -1,4 +1,4 @@
-import type { FilterKey, SearchParams } from './types.ts'
+import type { FilterKey, SearchParams } from './utilTypes.ts'
 
 type Resolver = ( value: string | number ) => string
 
@@ -10,7 +10,7 @@ const SearchParamResolverMap = new Map<FilterKey, Resolver>( [
   [ 'perPage', ( value ) => `_per_page=${ `${ value }`.trim() }` ],
 ] )
 
-export function resolveSearchParams( searchParams?: SearchParams ) {
+function resolveSearchParams( searchParams?: SearchParams ) {
   if ( !searchParams ) {
     return ''
   }
@@ -30,3 +30,5 @@ export function resolveSearchParams( searchParams?: SearchParams ) {
       return `${ params }&${ stringifiedParam }`
     }, '' )
 }
+
+export default resolveSearchParams

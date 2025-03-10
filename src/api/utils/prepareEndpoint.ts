@@ -1,12 +1,13 @@
-import { appendsSearchParamsToEndpoint } from './appendsSearchParamsToEndpoint.ts'
-import { resolveSearchParams } from './resolveSearchParams.ts'
-import type { EndpointParams, ExtractParams } from './types.ts'
+import appendsProxyToEndpoint from './appendsProxyToEndpoint.ts'
+import appendsSearchParamsToEndpoint from './appendsSearchParamsToEndpoint.ts'
+import resolveSearchParams from './resolveSearchParams.ts'
+import type { EndpointParams, ExtractParams } from './utilTypes.ts'
 
 interface PrepareEndpointOptions<TEndpoint extends string> extends EndpointParams<TEndpoint> {
   endpoint: TEndpoint
 }
 
-export const prepareEndpoint = <TEndpoint extends string>( {
+const prepareEndpoint = <TEndpoint extends string>( {
   endpoint,
   params,
   searchParams,
@@ -14,7 +15,9 @@ export const prepareEndpoint = <TEndpoint extends string>( {
   const paramRegex = /:([^/]+)/g
   let match
   const resolvedSearchParams = resolveSearchParams( searchParams )
-  let result = appendsSearchParamsToEndpoint( endpoint, resolvedSearchParams )
+  let result = appendsProxyToEndpoint(
+    appendsSearchParamsToEndpoint( endpoint, resolvedSearchParams )
+  )
 
   if ( !params ) {
     return result
@@ -33,3 +36,5 @@ export const prepareEndpoint = <TEndpoint extends string>( {
 
   return result
 }
+
+export default prepareEndpoint

@@ -1,10 +1,10 @@
-import { fileURLToPath, URL } from 'node:url'
-
-import { defineConfig, loadEnv } from 'vite'
+import tailwindcss from '@tailwindcss/vite'
 import vue from '@vitejs/plugin-vue'
 import vueJsx from '@vitejs/plugin-vue-jsx'
+import { fileURLToPath, URL } from 'node:url'
+import { defineConfig, loadEnv } from 'vite'
 import vueDevTools from 'vite-plugin-vue-devtools'
-import tailwindcss from '@tailwindcss/vite'
+import { PROXY_API } from './src/constans'
 
 // https://vite.dev/config/
 export default defineConfig(({ mode }) => {
@@ -22,10 +22,10 @@ export default defineConfig(({ mode }) => {
     server: {
       port: Number(envs.VITE_PORT),
       proxy: {
-        '/api': {
+        [PROXY_API]: {
           target: envs.VITE_API_HOST ?? 'http://localhost:3666',
           changeOrigin: true,
-          rewrite: (path) =>path.replace(/^\/api/, '')
+          rewrite: (path) => path.replace(new RegExp(`^${PROXY_API}`), '')
         },
       }
     },

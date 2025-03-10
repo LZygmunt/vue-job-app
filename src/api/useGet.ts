@@ -1,6 +1,6 @@
-import { prepareEndpoint } from './utils/prepareEndpoint.ts'
-import { resolveSearchParams } from './utils/resolveSearchParams.ts'
-import type { EndpointParams } from './utils/types.ts'
+import prepareEndpoint from './utils/prepareEndpoint.ts'
+import resolveSearchParams from './utils/resolveSearchParams.ts'
+import type { EndpointParams } from './utils/utilTypes.ts'
 import {
   type DefaultError,
   type QueryKey,
@@ -51,7 +51,7 @@ const useGet = <
     queryFn: async ()=> {
       const res = await fetch(
         prepareEndpoint({
-          endpoint: `/api${ endpoint }` as TEndpoint,
+          endpoint,
           params: unwrappedOptions?.params,
           searchParams: unwrappedOptions?.searchParams,
         }),
