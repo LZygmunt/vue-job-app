@@ -32,7 +32,7 @@ const useGet = <
   options?: QueryOptions<TQueryFnData, TError, TData, TQueryFnData, TQueryKey, TEndpoint>,
 ): UseQueryReturnType<TData, TError> => {
   const unwrappedOptions = toValue(options)
-  const queryKey: string[] = ['endpoint']
+  const queryKey: string[] = [endpoint]
   const resolvedSearchParams = resolveSearchParams( unwrappedOptions?.searchParams )
 
   if (unwrappedOptions?.params) {
@@ -51,7 +51,7 @@ const useGet = <
     queryFn: async ()=> {
       const res = await fetch(
         prepareEndpoint({
-          endpoint: import.meta.env.VITE_API_HOST + endpoint,
+          endpoint: `/api${ endpoint }` as TEndpoint,
           params: unwrappedOptions?.params,
           searchParams: unwrappedOptions?.searchParams,
         }),

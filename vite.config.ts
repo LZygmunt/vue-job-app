@@ -21,6 +21,13 @@ export default defineConfig(({ mode }) => {
     ],
     server: {
       port: Number(envs.VITE_PORT),
+      proxy: {
+        '/api': {
+          target: envs.VITE_API_HOST ?? 'http://localhost:3666',
+          changeOrigin: true,
+          rewrite: (path) =>path.replace(/^\/api/, '')
+        },
+      }
     },
     resolve: {
       alias: {
