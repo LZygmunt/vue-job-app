@@ -10,12 +10,8 @@ import BaseCard from './BaseCard.vue'
     <div class="flex flex-col">
       <slot name="salary"></slot>
       <hr class="my-4 border-gray-500" />
-      <div class="flex justify-between items-center">
-        <slot name="location"></slot>
-        <slot name="readMore"></slot>
-      </div>
+      <slot name="footer"></slot>
     </div>
   </BaseCard>
 </template>
 
-<style scoped></style>

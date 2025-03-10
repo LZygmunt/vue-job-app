@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import JobCardFooter from '#/components/JobCardFooter.vue'
 import JobCardWrapper from './JobCardWrapper.vue'
 import BaseLinkButton from './BaseLinkButton.vue'
 import TruncateText from './TruncateText.vue'
@@ -29,16 +30,20 @@ const { title, type, location, description, salary, id } = defineProps<JobCardPr
     <template #salary>
       <span class="text-green-500">{{ salary }}</span>
     </template>
-    <template #location>
-      <span>
-        <i class="pi pi-map-marker" />
-        {{ location }}
-      </span>
-    </template>
-    <template #readMore>
-      <BaseLinkButton :to="`/jobs/${id}`">
-        Read More
-      </BaseLinkButton>
+    <template #footer>
+      <JobCardFooter>
+        <template #location>
+          <span>
+            <i class="pi pi-map-marker" />
+            {{ location }}
+          </span>
+        </template>
+        <template #readMore>
+          <BaseLinkButton :to="`/jobs/${id}`">
+            Read More
+          </BaseLinkButton>
+        </template>
+      </JobCardFooter>
     </template>
   </JobCardWrapper>
 </template>
