@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import ActionCard from '#/components/ActionCard.vue'
 import BaseBanner from '#/components/BaseBanner.vue'
-import BaseRedirectButton from '#/components/BaseRedirectButton.vue'
+import BaseLinkButton from '#/components/BaseLinkButton.vue'
 import JobBrowseSection from '#/components/JobBrowseSection.vue'
 </script>
 
@@ -21,36 +21,36 @@ import JobBrowseSection from '#/components/JobBrowseSection.vue'
         description="Browse our Vue jobs and start your career today"
         variant="secondary"
       >
-        <BaseRedirectButton
+        <BaseLinkButton
           class="mt-2"
-          redirectTo="/jobs"
+          to="/jobs"
           variant="secondary"
         >
           Browse Jobs
-        </BaseRedirectButton>
+        </BaseLinkButton>
       </ActionCard>
       <ActionCard
         class="p-6"
         title="For Employers"
         description="List your job to find the perfect developer for the role "
       >
-        <BaseRedirectButton
+        <BaseLinkButton
           class="mt-2"
-          redirectTo="/jobs/add"
+          to="/jobs/add"
         >
           Add Job
-        </BaseRedirectButton>
+        </BaseLinkButton>
       </ActionCard>
     </section>
     <JobBrowseSection :limit="3" />
     <section class="text-center py-8">
-      <BaseRedirectButton
+      <BaseLinkButton
         class="view-all-button w-1/3"
-        redirectTo="/jobs"
+        to="/jobs"
         variant="secondary"
       >
         View All Jobs
-      </BaseRedirectButton>
+      </BaseLinkButton>
     </section>
   </main>
 </template>

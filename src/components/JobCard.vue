@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import JobCardWrapper from './JobCardWrapper.vue'
-import BaseRedirectButton from './BaseRedirectButton.vue'
+import BaseLinkButton from './BaseLinkButton.vue'
 import TruncateText from './TruncateText.vue'
 
 export interface JobOffer {
@@ -36,9 +36,9 @@ const { title, type, location, description, salary, id } = defineProps<JobCardPr
       </span>
     </template>
     <template #readMore>
-      <BaseRedirectButton :redirectTo="`/jobs/${id}`">
+      <BaseLinkButton :to="`/jobs/${id}`">
         Read More
-      </BaseRedirectButton>
+      </BaseLinkButton>
     </template>
   </JobCardWrapper>
 </template>

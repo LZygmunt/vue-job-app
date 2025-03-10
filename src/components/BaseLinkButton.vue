@@ -1,19 +1,18 @@
 <script setup lang="ts">
 import { reactive } from 'vue'
+import type { RouterLinkProps } from 'vue-router'
 
-interface BaseRedirectButtonProps {
-  redirectTo: string
+interface BaseLinkButtonProps extends RouterLinkProps {
   variant?: 'primary' | 'secondary'
-  class?: string
 }
-const { redirectTo, variant = 'primary', class: className } = defineProps<BaseRedirectButtonProps>()
-const redirectButtonClass = reactive([{ secondary: variant === 'secondary' }, className])
+const { variant = 'primary', ...routerLinkProps } = defineProps<BaseLinkButtonProps>()
+const redirectButtonClass = reactive([{ secondary: variant === 'secondary' }])
 </script>
 
 <template>
   <RouterLink
-    :to="redirectTo"
     :class="redirectButtonClass"
+    v-bind="routerLinkProps"
   >
     <slot></slot>
   </RouterLink>
