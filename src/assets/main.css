@@ -13,6 +13,7 @@
     'Droid Sans',
     'Helvetica Neue',
     sans-serif;
+    --navbar-height: 80px;
 }
 
 * {

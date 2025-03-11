@@ -31,6 +31,8 @@ header {
     py-5.5
     sticky
     top-0
+    h-(--navbar-height)
+    z-1
     shadow-md
     shadow-green-500/50
     border-b

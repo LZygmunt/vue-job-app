@@ -7,9 +7,9 @@ import BaseCard from './BaseCard.vue'
     <div class="flex flex-col gap-4">
       <slot name="mainDetails"></slot>
     </div>
-    <div class="flex flex-col">
+    <div v-if="$slots.salary || $slots.footer" class="flex flex-col">
       <slot name="salary"></slot>
-      <hr class="my-4 border-gray-500" />
+      <hr v-if="$slots.footer" class="my-4 border-gray-500" />
       <slot name="footer"></slot>
     </div>
   </BaseCard>

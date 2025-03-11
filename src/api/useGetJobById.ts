@@ -9,7 +9,7 @@ export interface UseGetJobByIdOptions<TJob> {
 
 const ENDPOINT = '/jobs/:jobId' as const
 
-const useGetJobById = <TJob>({
+const useGetJobById = <TJob = JobOfferDTO>({
   jobId,
   select,
 }: UseGetJobByIdOptions<TJob>) => useGet<JobOfferDTO, TJob, [], typeof ENDPOINT>(

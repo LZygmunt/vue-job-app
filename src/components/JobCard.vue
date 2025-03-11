@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import JobCardFooter from '#/components/JobCardFooter.vue'
-import JobCardWrapper from './JobCardWrapper.vue'
+import JobLocation from '#/components/JobLocation.vue'
 import BaseLinkButton from './BaseLinkButton.vue'
+import JobCardWrapper from './JobCardWrapper.vue'
 import TruncateText from './TruncateText.vue'
 
 export interface JobOffer {
@@ -33,10 +34,7 @@ const { title, type, location, description, salary, id } = defineProps<JobCardPr
     <template #footer>
       <JobCardFooter>
         <template #location>
-          <span>
-            <i class="pi pi-map-marker" />
-            {{ location }}
-          </span>
+          <JobLocation>{{ location }}</JobLocation>
         </template>
         <template #readMore>
           <BaseLinkButton :to="`/jobs/${id}`">
@@ -48,4 +46,3 @@ const { title, type, location, description, salary, id } = defineProps<JobCardPr
   </JobCardWrapper>
 </template>
 
-<style scoped></style>

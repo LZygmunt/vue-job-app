@@ -1,3 +1,4 @@
+import { MINUTE } from '#/constans.ts'
 import prepareEndpoint from './utils/prepareEndpoint.ts'
 import resolveSearchParams from './utils/resolveSearchParams.ts'
 import type { EndpointParams } from './utils/utilTypes.ts'
@@ -36,7 +37,7 @@ const useGet = <
   const resolvedSearchParams = resolveSearchParams( unwrappedOptions?.searchParams )
 
   if (unwrappedOptions?.params) {
-    queryKey.push(...Object(unwrappedOptions?.params).values() as string[])
+    queryKey.push(...Object.values(unwrappedOptions?.params) as string[])
   }
 
   if (resolvedSearchParams) {
