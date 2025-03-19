@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import type { SearchParams } from '#/api/utils/utilTypes.ts'
+import BaseTitle from './BaseTitle.vue'
 import BaseSection from './BaseSection.vue'
 import JobCardFooter from './JobCardFooter.vue'
 import JobCardWrapper from './JobCardWrapper.vue'
@@ -10,7 +11,7 @@ const searchParamsProps = defineProps<SearchParams>()
 
 <template>
   <BaseSection>
-    <h2 class="text-center text-green-500 !text-4xl !font-black">Browse Jobs</h2>
+    <BaseTitle>Browse Jobs</BaseTitle>
     <div class="grid grid-cols-3 gap-4">
       <Suspense>
         <template #default>
@@ -48,5 +49,3 @@ const searchParamsProps = defineProps<SearchParams>()
     </div>
   </BaseSection>
 </template>
-
-<style scoped></style>
