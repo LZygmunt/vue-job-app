@@ -16,7 +16,6 @@ import JobBrowseSection from '#/components/JobBrowseSection.vue'
     />
     <section class="w-full max-w-7/8 mx-auto my-6 grid grid-cols-2 gap-4">
       <ActionCard
-        class="p-6"
         title="For developers"
         description="Browse our Vue jobs and start your career today"
         variant="secondary"
@@ -30,7 +29,6 @@ import JobBrowseSection from '#/components/JobBrowseSection.vue'
         </BaseLinkButton>
       </ActionCard>
       <ActionCard
-        class="p-6"
         title="For Employers"
         description="List your job to find the perfect developer for the role "
       >

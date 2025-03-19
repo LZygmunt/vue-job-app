@@ -8,16 +8,16 @@ const searchParamsProps = defineProps<SearchParams>()
 
 const { data, suspense } = useGetJobs({
   searchParams: searchParamsProps,
-  select: ( data ) => {
+  select: (data) => {
     const jobs = Array.isArray(data) ? data : data.data
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    return jobs.map( ( { company, ...item } ) => item as JobOffer )
+    return jobs.map(({ company, ...item }) => item as JobOffer)
   },
 })
 
 await suspense()
-const jobs = computed(() => data.value ?? [] as JobOffers)
+const jobs = computed(() => data.value ?? ([] as JobOffers))
 </script>
 
 <template>
@@ -28,6 +28,4 @@ const jobs = computed(() => data.value ?? [] as JobOffers)
   />
 </template>
 
-<style scoped>
-
-</style>
+<style scoped></style>

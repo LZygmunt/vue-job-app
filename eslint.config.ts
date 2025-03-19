@@ -24,7 +24,8 @@ export default defineConfigWithVueTs(
   {
     rules: {
       "arrow-body-style": ["error"],
-      "vue/attribute-hyphenation": ["error", 'never']
+      "vue/attribute-hyphenation": ["error", 'never'],
+      "vue/v-on-event-hyphenation": ["error", 'never']
     }
   },
   {
