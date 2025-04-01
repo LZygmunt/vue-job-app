@@ -1,4 +1,3 @@
-import { MINUTE } from '#/constans.ts'
 import prepareEndpoint from './utils/prepareEndpoint.ts'
 import resolveSearchParams from './utils/resolveSearchParams.ts'
 import type { EndpointParams } from './utils/utilTypes.ts'
@@ -18,8 +17,9 @@ export type QueryOptions<
   TQueryData = TQueryFnData,
   TQueryKey extends QueryKey = QueryKey,
   TEndpoint extends string = string,
-> =
-  & Partial<Omit<QueryObserverOptions<TQueryFnData, TError, TData, TQueryData, TQueryKey>, 'queryFn'>>
+> = Partial<
+  Omit<QueryObserverOptions<TQueryFnData, TError, TData, TQueryData, TQueryKey>, 'queryFn'>
+>
   & EndpointParams<TEndpoint>
 
 const useGet = <
@@ -27,17 +27,17 @@ const useGet = <
   TData = TQueryFnData,
   TQueryKey extends QueryKey = QueryKey,
   TEndpoint extends string = string,
-  TError = DefaultError
+  TError = DefaultError,
 >(
   endpoint: TEndpoint,
   options?: QueryOptions<TQueryFnData, TError, TData, TQueryFnData, TQueryKey, TEndpoint>,
 ): UseQueryReturnType<TData, TError> => {
   const unwrappedOptions = toValue(options)
   const queryKey: string[] = [endpoint]
-  const resolvedSearchParams = resolveSearchParams( unwrappedOptions?.searchParams )
+  const resolvedSearchParams = resolveSearchParams(unwrappedOptions?.searchParams)
 
   if (unwrappedOptions?.params) {
-    queryKey.push(...Object.values(unwrappedOptions?.params) as string[])
+    queryKey.push(...(Object.values(unwrappedOptions?.params) as string[]))
   }
 
   if (resolvedSearchParams) {
@@ -49,7 +49,7 @@ const useGet = <
   }
 
   return useQuery({
-    queryFn: async ()=> {
+    queryFn: async () => {
       const res = await fetch(
         prepareEndpoint({
           endpoint,
@@ -63,7 +63,7 @@ const useGet = <
       }
       return await res.json()
     },
-    ...options as Record<string, unknown>,
+    ...(options as Record<string, unknown>),
     queryKey,
   })
 }

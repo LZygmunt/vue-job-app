@@ -1,11 +1,30 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { computed } from 'vue'
+import { useRoute } from 'vue-router'
+
+const route = useRoute()
+
+const isJobsActive = computed(() => route.path.startsWith('/jobs') && route.path !== '/jobs/add')
+</script>
 
 <template>
   <header>
     <nav>
-      <RouterLink to="/">Home</RouterLink>
-      <RouterLink to="/jobs">Jobs</RouterLink>
-      <RouterLink to="/jobs/add">Add job</RouterLink>
+      <RouterLink
+        to="/"
+        activeClass="active"
+        >Home</RouterLink
+      >
+      <RouterLink
+        to="/jobs"
+        :class="{ active: isJobsActive }"
+        >Jobs</RouterLink
+      >
+      <RouterLink
+        to="/jobs/add"
+        activeClass="active"
+        >Add job</RouterLink
+      >
     </nav>
     <h2>
       <img
@@ -61,8 +80,7 @@ nav {
   }
 }
 
-.router-link-exact-active,
-.router-link-active {
+.active {
   @apply no-underline
   transition-all
   duration-40

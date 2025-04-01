@@ -25,9 +25,12 @@ export default defineConfig(({ mode }) => {
         [PROXY_API]: {
           target: envs.VITE_API_HOST ?? 'http://localhost:3666',
           changeOrigin: true,
-          rewrite: (path) => path.replace(new RegExp(`^${PROXY_API}`), '')
+          rewrite: (path) => path.replace(new RegExp(`^${PROXY_API}`), ''),
         },
-      }
+      },
+      watch: {
+        ignored: ['**/src/db.json'],
+      },
     },
     resolve: {
       alias: {
