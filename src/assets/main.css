@@ -43,3 +43,9 @@ button,
 :root {
     interpolate-size: allow-keywords;
 }
+.Vue-Toastification__toast--success {
+    @apply bg-green-600;
+}
+.Vue-Toastification__toast--error {
+    @apply bg-red-600;
+}

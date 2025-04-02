@@ -1,14 +1,16 @@
 <script setup lang="ts">
+import { useRouter } from 'vue-router'
+import { useToast } from 'vue-toastification'
 import useAddJob from '#/api/useAddJob.ts'
 import BaseCard from '#/components/BaseCard.vue'
 import BaseSection from '#/components/BaseSection.vue'
 import BaseTitle from '#/components/BaseTitle.vue'
 import JobManageForm from '#/components/JobManageForm.vue'
 import type { Job } from '#/components/JobTypes.ts'
-import { useRouter } from 'vue-router'
 
 const { mutate } = useAddJob()
 const router = useRouter()
+const toast = useToast()
 
 const saveJob = (job: Job) => {
   mutate(
@@ -27,11 +29,12 @@ const saveJob = (job: Job) => {
     },
     {
       onSuccess: (res) => {
-        console.log('success ->', res)
+        toast.success('Job added successfully.')
         router.push(`/jobs/${res.id}`)
       },
       onError: (res) => {
-        console.log('error ->', res)
+        console.error(res)
+        toast.error('Something went wrong.')
       },
     },
   )
