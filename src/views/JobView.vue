@@ -1,14 +1,22 @@
 <script setup lang="ts">
+import { watchEffect } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
 import useGetJobById from '#/api/useGetJobById.ts'
 import BaseButton from '#/components/BaseButton.vue'
 import JobButtonBack from '#/components/JobButtonBack.vue'
 import JobCardWrapper from '#/components/JobCardWrapper.vue'
 import JobLocation from '#/components/JobLocation.vue'
-import { useRoute } from 'vue-router'
 
 const { params } = useRoute()
+const router = useRouter()
 
-const { data, isLoading } = useGetJobById({ jobId: params.id as string })
+const { data, isLoading, error } = useGetJobById({ jobId: params.id as string })
+
+watchEffect(() => {
+  if (error.value && 'cause' in error.value && error.value.cause === 404) {
+    router.push('/jobs')
+  }
+})
 </script>
 
 <template>

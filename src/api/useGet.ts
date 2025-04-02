@@ -50,16 +50,19 @@ const useGet = <
 
   return useQuery({
     queryFn: async () => {
-      const res = await fetch(
-        prepareEndpoint({
-          endpoint,
-          params: unwrappedOptions?.params,
-          searchParams: unwrappedOptions?.searchParams,
-        }),
-      )
+      const preparedEndpoint = prepareEndpoint({
+        endpoint,
+        params: unwrappedOptions?.params,
+        searchParams: unwrappedOptions?.searchParams,
+      })
+      const res = await fetch(preparedEndpoint)
+
+      if (res.status === 404) {
+        throw new Error(`Not Found: ${preparedEndpoint}`, { cause: res.status })
+      }
 
       if (!res.ok) {
-        throw new Error(`${endpoint} is not ok`)
+        throw new Error(`${preparedEndpoint} is not ok`)
       }
       return await res.json()
     },
