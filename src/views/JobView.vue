@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import useDeleteJob from '#/api/useDeleteJob.ts'
 import { watchEffect } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import useGetJobById from '#/api/useGetJobById.ts'
@@ -6,11 +7,31 @@ import BaseButton from '#/components/BaseButton.vue'
 import JobButtonBack from '#/components/JobButtonBack.vue'
 import JobCardWrapper from '#/components/JobCardWrapper.vue'
 import JobLocation from '#/components/JobLocation.vue'
+import { useToast } from 'vue-toastification'
 
 const { params } = useRoute()
 const router = useRouter()
+const toast = useToast()
 
 const { data, isLoading, error } = useGetJobById({ jobId: params.id as string })
+const { mutate: deleteJob } = useDeleteJob()
+
+const deleteJobHandler = async () => {
+  deleteJob(
+    {
+      id: params.id as string,
+    },
+    {
+      onSuccess: () => {
+        toast.success('Job deleted successfully.')
+        router.push('/jobs')
+      },
+      onError: () => {
+        toast.error('Something went wrong.')
+      },
+    },
+  )
+}
 
 watchEffect(() => {
   if (error.value && 'cause' in error.value && error.value.cause === 404) {
@@ -122,7 +143,12 @@ watchEffect(() => {
       <template #mainDetails>
         <span class="font-bold text-xl">Manage Job</span>
         <BaseButton>Edit Job</BaseButton>
-        <BaseButton class="delete-button">Delete Job</BaseButton>
+        <BaseButton
+          class="delete-button"
+          @click="deleteJobHandler"
+        >
+          Delete Job
+        </BaseButton>
       </template>
     </JobCardWrapper>
   </section>
