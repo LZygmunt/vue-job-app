@@ -58,6 +58,8 @@ const useGet = <
       const res = await fetch(preparedEndpoint)
 
       if (res.status === 404) {
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
         throw new Error(`Not Found: ${preparedEndpoint}`, { cause: res.status })
       }
 

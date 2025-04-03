@@ -59,41 +59,41 @@ const isRadio = computed(() => props.type === 'radio')
 
     <BaseTextInput
       v-if="isTextLike"
-      v-bind="inputPropsWithAttrs"
+      v-bind="inputPropsWithAttrs as BaseTextInputProps"
       @update:modelValue="updateValue"
     />
 
     <BaseTextarea
       v-if="isTextarea"
-      v-bind="inputPropsWithAttrs"
+      v-bind="inputPropsWithAttrs as BaseTextareaProps"
       type="textarea"
       @update:modelValue="updateValue"
     />
 
     <BaseNumberInput
       v-if="isNumber"
-      v-bind="inputPropsWithAttrs"
+      v-bind="inputPropsWithAttrs as BaseNumberInputProps"
       type="number"
       @update:modelValue="updateValue"
     />
 
     <BaseSelect
       v-if="isSelect"
-      v-bind="inputPropsWithAttrs"
+      v-bind="inputPropsWithAttrs as BaseSelectInputProps"
       type="select"
       @update:modelValue="updateValue"
     />
 
     <BaseCheckboxInput
       v-if="isCheckbox"
-      v-bind="inputPropsWithAttrs"
+      v-bind="inputPropsWithAttrs as BaseCheckboxInputProps"
       type="checkbox"
       @update:modelValue="updateValue"
     />
 
     <BaseRadioInput
       v-if="isRadio"
-      v-bind="inputPropsWithAttrs"
+      v-bind="inputPropsWithAttrs as BaseRadioInputProps"
       type="radio"
       @update:modelValue="updateValue"
     />
