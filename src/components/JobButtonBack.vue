@@ -1,14 +1,25 @@
 <script setup lang="ts">
-import BaseButton from './BaseButton.vue'
 import { useRouter } from 'vue-router'
+import BaseButton from './BaseButton.vue'
 
 const router = useRouter()
 
-const goBack = router.back
+const goBack = () => {
+  if (router.options.history.state.back) {
+    router.push(router.options.history.state.back as string)
+    return
+  }
+  router.push(`/jobs`)
+}
 </script>
 
 <template>
-  <BaseButton class="job-back-button" @click="goBack">Go back</BaseButton>
+  <BaseButton
+    class="job-back-button"
+    @click="goBack"
+  >
+    Go back
+  </BaseButton>
 </template>
 
 <style scoped>

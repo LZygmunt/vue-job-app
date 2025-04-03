@@ -1,4 +1,5 @@
 import type { RouteRecordRaw } from 'vue-router'
+import JobEditView from '#/views/JobEditView.vue'
 import JobAddView from '#/views/JobAddView.vue'
 import HomeView from '#/views/HomeView.vue'
 import JobsView from '#/views/JobsView.vue'
@@ -25,8 +26,18 @@ export const routes: RouteRecordRaw[] = [
       },
       {
         path: ':id',
-        name: 'job',
-        component: JobView,
+        children: [
+          {
+            path: '',
+            name: 'job',
+            component: JobView,
+          },
+          {
+            path: 'edit',
+            name: 'job-edit',
+            component: JobEditView,
+          },
+        ],
       },
     ],
   },

@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import useDeleteJob from '#/api/useDeleteJob.ts'
+import useEditJob from '#/api/useEditJob.ts'
 import { watchEffect } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import useGetJobById from '#/api/useGetJobById.ts'
@@ -13,7 +14,7 @@ const { params } = useRoute()
 const router = useRouter()
 const toast = useToast()
 
-const { data, isLoading, error } = useGetJobById({ jobId: params.id as string })
+const { data, isLoading, error } = useGetJobById({ id: params.id as string })
 const { mutate: deleteJob } = useDeleteJob()
 
 const deleteJobHandler = async () => {
@@ -31,6 +32,13 @@ const deleteJobHandler = async () => {
       },
     },
   )
+}
+
+const editJobHandler = async () => {
+  router.push({
+    path: `/jobs/${params.id}/edit`,
+    state: { backTo: router.options.history.state.back },
+  })
 }
 
 watchEffect(() => {
@@ -142,7 +150,7 @@ watchEffect(() => {
     <JobCardWrapper class="details__buttons">
       <template #mainDetails>
         <span class="font-bold text-xl">Manage Job</span>
-        <BaseButton>Edit Job</BaseButton>
+        <BaseButton @click="editJobHandler">Edit Job</BaseButton>
         <BaseButton
           class="delete-button"
           @click="deleteJobHandler"

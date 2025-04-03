@@ -1,9 +1,15 @@
 <script setup lang="ts">
 import { type Emit, type Job, JOB_SALARY, JOB_TYPE } from './JobTypes.ts'
-import { type FormHTMLAttributes, reactive } from 'vue'
+import { type FormHTMLAttributes, reactive, watchEffect } from 'vue'
 import BaseButton from './BaseButton.vue'
 import FormControl from './FormControl.vue'
 import type { Options } from './typesField'
+
+interface JobManageFormProps {
+  initials?: Job & { id: string }
+}
+
+const props = defineProps<JobManageFormProps>()
 
 const job = reactive<Job>({
   type: JOB_TYPE.FullTime,
@@ -42,6 +48,12 @@ const salaryOptions: Options = [
   { value: JOB_SALARY.Between175And200, label: '$175 - $200K' },
   { value: JOB_SALARY.Over200, label: 'Over $200K' },
 ]
+
+watchEffect(() => {
+  if (props.initials) {
+    Object.assign(job, props.initials)
+  }
+})
 </script>
 
 <template>

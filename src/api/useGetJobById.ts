@@ -4,21 +4,16 @@ import useGet from './useGet.ts'
 
 export interface UseGetJobByIdOptions<TJob> {
   select?: (data: JobOfferDTO) => TJob
-  jobId: string
+  id: string
 }
 
-const ENDPOINT = '/jobs/:jobId' as const
+const ENDPOINT = '/jobs/:id' as const
 
-const useGetJobById = <TJob = JobOfferDTO>({
-  jobId,
-  select,
-}: UseGetJobByIdOptions<TJob>) => useGet<JobOfferDTO, TJob, [], typeof ENDPOINT>(
-  ENDPOINT,
-  {
-    params: { jobId },
+const useGetJobById = <TJob = JobOfferDTO>({ id, select }: UseGetJobByIdOptions<TJob>) =>
+  useGet<JobOfferDTO, TJob, [], typeof ENDPOINT>(ENDPOINT, {
+    params: { id },
     staleTime: 5 * MINUTE,
     select,
-  }
-)
+  })
 
 export default useGetJobById
