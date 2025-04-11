@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "rewrites": [
+    {
+      "source": "/api/:match*",
+      "destination": "https://jobs-serve.vercel.app/:match*"
+    }
+  ],
+  "cleanUrls": true,
+  "trailingSlash": false
+}
