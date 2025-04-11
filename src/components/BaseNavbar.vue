@@ -12,16 +12,19 @@ const isJobsActive = computed(() => route.path.startsWith('/jobs') && route.path
     <nav>
       <RouterLink
         to="/"
+        class="link"
         activeClass="active"
         >Home</RouterLink
       >
       <RouterLink
         to="/jobs"
+        class="link"
         :class="{ active: isJobsActive }"
         >Jobs</RouterLink
       >
       <RouterLink
         to="/jobs/add"
+        class="link"
         activeClass="active"
         >Add job</RouterLink
       >
@@ -71,7 +74,7 @@ nav {
     items-center
     gap-1;
 
-  a {
+  .link {
     @apply px-2
       py-1
       rounded-xs
@@ -80,7 +83,7 @@ nav {
   }
 }
 
-.active {
+.link.active {
   @apply no-underline
   transition-all
   duration-40

@@ -11,6 +11,7 @@ const redirectButtonClass = reactive([{ secondary: variant === 'secondary' }])
 
 <template>
   <RouterLink
+    class="link-button"
     :class="redirectButtonClass"
     v-bind="routerLinkProps"
   >
@@ -21,7 +22,7 @@ const redirectButtonClass = reactive([{ secondary: variant === 'secondary' }])
 <style scoped>
 @reference '#/assets/main.css';
 
-a {
+.link-button {
   @apply inline-block
   px-4
   py-2
@@ -31,7 +32,7 @@ a {
   hover:bg-green-600
   dark:bg-green-500/60;
 }
-a.secondary {
+.link-button.secondary {
   @apply text-gray-100
   bg-neutral-900
   hover:bg-neutral-700
