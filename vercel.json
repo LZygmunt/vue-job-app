@@ -4,14 +4,12 @@
     {
       "source": "/api/:match*",
       "destination": "https://jobs-serve.vercel.app/:match*"
+    },
+    {
+      "source": "/:path*",
+      "destination": "/index.html"
     }
   ],
   "cleanUrls": true,
-  "trailingSlash": false,
-  "routes": [
-    {
-      "src": "/(.*)",
-      "dest": "/index.html"
-    }
-  ]
+  "trailingSlash": false
 }
