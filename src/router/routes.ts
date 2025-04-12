@@ -1,4 +1,5 @@
 import type { RouteRecordRaw } from 'vue-router'
+import NotFoundView from '#/views/NotFoundView.vue'
 import JobEditView from '#/views/JobEditView.vue'
 import JobAddView from '#/views/JobAddView.vue'
 import HomeView from '#/views/HomeView.vue'
@@ -40,5 +41,10 @@ export const routes: RouteRecordRaw[] = [
         ],
       },
     ],
+  },
+  {
+    path: '/:catchAll(.*)',
+    name: 'not-found',
+    component: NotFoundView,
   },
 ]
