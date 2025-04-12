@@ -1,14 +1,13 @@
 <script setup lang="ts">
-import useDeleteJob from '#/api/useDeleteJob.ts'
-import useEditJob from '#/api/useEditJob.ts'
 import { watchEffect } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
+import { useToast } from 'vue-toastification'
+import useDeleteJob from '#/api/useDeleteJob.ts'
 import useGetJobById from '#/api/useGetJobById.ts'
 import BaseButton from '#/components/BaseButton.vue'
 import JobButtonBack from '#/components/JobButtonBack.vue'
 import JobCardWrapper from '#/components/JobCardWrapper.vue'
 import JobLocation from '#/components/JobLocation.vue'
-import { useToast } from 'vue-toastification'
 
 const { params } = useRoute()
 const router = useRouter()
@@ -118,7 +117,8 @@ watchEffect(() => {
           <span
             v-else
             class="font-bold text-lg rounded-xs bg-green-300/20 px-2 py-1"
-            >{{ data?.company?.contactPhone }}</span
+            :class="data?.company?.contactPhone ? '' : 'italic'"
+            >{{ data?.company?.contactPhone || 'No data' }}</span
           >
         </p>
       </template>

@@ -143,7 +143,6 @@ watchEffect(() => {
       name="contact_phone"
       label="Contact Phone"
       placeholder="Optional phone for applicants"
-      required
     />
 
     <BaseButton
