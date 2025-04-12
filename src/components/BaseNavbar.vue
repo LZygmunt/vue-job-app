@@ -1,10 +1,25 @@
 <script setup lang="ts">
 import { computed } from 'vue'
-import { useRoute } from 'vue-router'
+import { type RouteRecordNameGeneric, useRoute } from 'vue-router'
+import {
+  JOB_DETAILS_ROUTE_NAME,
+  JOBS_MAIN_ROUTE_NAME,
+  JOBS_ROUTE_NAME,
+} from '#/router/jobsRouteRecord.ts'
 
 const route = useRoute()
 
-const isJobsActive = computed(() => route.path.startsWith('/jobs') && route.path !== '/jobs/add')
+const isJobsActive = computed(() => {
+  const jobsRouteNames = [
+    JOBS_MAIN_ROUTE_NAME,
+    JOBS_ROUTE_NAME.JOB_LIST,
+    JOBS_ROUTE_NAME.JOB,
+    JOB_DETAILS_ROUTE_NAME.JOB_DETAILS,
+    JOB_DETAILS_ROUTE_NAME.JOB_EDIT,
+  ] as RouteRecordNameGeneric[]
+
+  return route.matched.every((matched) => matched.name && jobsRouteNames.includes(matched.name))
+})
 </script>
 
 <template>
