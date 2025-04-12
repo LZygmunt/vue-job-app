@@ -30,6 +30,9 @@ const useEditJob = () => {
         qc.invalidateQueries({ queryKey: ['/jobs/:id', newJob.id] })
       }
     },
+    onSuccess() {
+      qc.invalidateQueries({ queryKey: ['/jobs'] })
+    },
   })
 }
 
