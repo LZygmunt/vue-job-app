@@ -40,7 +40,10 @@ import JobBrowseSection from '#/components/JobBrowseSection.vue'
         </BaseLinkButton>
       </ActionCard>
     </section>
-    <JobBrowseSection :limit="3" />
+    <JobBrowseSection
+      :limit="3"
+      :disablePagination="true"
+    />
     <section class="text-center py-8">
       <BaseLinkButton
         class="view-all-button w-1/3"

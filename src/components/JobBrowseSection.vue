@@ -1,12 +1,16 @@
 <script setup lang="ts">
-import type { SearchParams } from '#/api/utils/utilTypes.ts'
-import BaseTitle from './BaseTitle.vue'
+import type { JobsSuspendableProps } from '#/components/JobSuspendable.vue'
+
 import BaseSection from './BaseSection.vue'
+import BaseTitle from './BaseTitle.vue'
 import JobCardFooter from './JobCardFooter.vue'
 import JobCardWrapper from './JobCardWrapper.vue'
 import JobSuspendable from './JobSuspendable.vue'
 
-const searchParamsProps = defineProps<SearchParams>()
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
+interface JobBrowseSectionProps extends JobsSuspendableProps {}
+
+const searchParamsProps = defineProps<JobBrowseSectionProps>()
 </script>
 
 <template>
