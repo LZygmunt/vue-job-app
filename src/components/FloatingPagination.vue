@@ -1,74 +1,46 @@
 <script setup lang="ts">
-import { computed, ref, useTemplateRef } from 'vue'
-import { useRoute } from 'vue-router'
+import { ref, toRefs, useTemplateRef } from 'vue'
+import { useCurrentPage } from '#/composables/useCurrentPage.ts'
+import { usePagination } from '#/composables/usePagination.ts'
 
 interface FloatingPaginationProps {
   lastPage?: number
 }
 
-const { lastPage = 10 } = defineProps<FloatingPaginationProps>()
+const props = withDefaults(defineProps<FloatingPaginationProps>(), {
+  lastPage: 10,
+})
+const { lastPage } = toRefs(props)
 
 const floatingPagination = useTemplateRef<HTMLDivElement>('floating-pagination')
 
-const route = useRoute()
-
-const isActive = ref(false)
+const isMaximized = ref(false)
 const timeoutId = ref<number | null>(null)
 const TIMEOUT_5_SECONDS = 5000
 
-const delayHidePagination = () =>
+const delayMinimizePagination = () =>
   setTimeout(() => {
     if (floatingPagination.value?.matches(':hover')) {
-      timeoutId.value = delayHidePagination()
+      timeoutId.value = delayMinimizePagination()
 
       return
     }
-    isActive.value = false
+    isMaximized.value = false
     timeoutId.value = null
   }, TIMEOUT_5_SECONDS)
 
 const handle = () => {
   if (timeoutId.value) return
 
-  isActive.value = true
-  timeoutId.value = delayHidePagination()
+  isMaximized.value = true
+  timeoutId.value = delayMinimizePagination()
 }
 
-const currentPage = computed(() => (route.query.page ? Number(route.query.page) : 1))
-const prevPage = computed(() => {
-  const pages = currentPage.value - 1
-  return pages < 1 ? 1 : pages
-})
-const nextPage = computed(() => {
-  const page = currentPage.value + 1
-  return page > lastPage ? lastPage : page
-})
-
-const getRange = (start: number, end: number) => {
-  const length = end - start + 1
-  return Array.from({ length }, (_, i) => start + i)
-}
-
-const pages = computed(() => {
-  const allPages = getRange(1, lastPage)
-
-  if (currentPage.value < 5) {
-    return allPages.filter((val) => val <= 5 || val >= lastPage).toSpliced(-1, 0, -1)
-  }
-
-  if (currentPage.value >= lastPage - 3 && currentPage.value <= lastPage) {
-    return allPages.filter((val) => val === 1 || val >= lastPage - 4).toSpliced(1, 0, -1)
-  }
-
-  return allPages
-    .filter(
-      (val) =>
-        val === 1
-        || val === lastPage
-        || (val >= currentPage.value - 1 && val <= currentPage.value + 1),
-    )
-    .toSpliced(1, 0, -1)
-    .toSpliced(-1, 0, -1)
+// ToDo: make possible to interact with minimized pagination
+const { currentPage } = useCurrentPage()
+const { prevPage, prevPageDisabled, nextPage, nextPageDisabled, pages } = usePagination({
+  lastPage,
+  currentPage,
 })
 </script>
 
@@ -79,14 +51,14 @@ const pages = computed(() => {
   >
     <ul
       class="floating-pagination list"
-      :class="isActive ? 'active' : ''"
+      :class="isMaximized ? 'maximized' : ''"
       @mouseover="handle"
     >
       <li>
         <RouterLink
           :to="`?page=${prevPage}`"
           :aria-label="`Go to page ${prevPage}`"
-          class=""
+          :disabled="prevPageDisabled ? '' : undefined"
         >
           <i class="pi pi-chevron-left chevron" />
         </RouterLink>
@@ -99,7 +71,7 @@ const pages = computed(() => {
             class="page"
             :aria-current="page === currentPage ? 'page' : undefined"
             :aria-label="page > 0 ? `Go to page ${page}` : undefined"
-            :aria-hidden="!isActive && page !== currentPage ? 'true' : undefined"
+            :aria-hidden="!isMaximized && page !== currentPage ? 'true' : undefined"
           >
             <span
               v-if="page === -1"
@@ -128,6 +100,7 @@ const pages = computed(() => {
         <RouterLink
           :to="`?page=${nextPage}`"
           :aria-label="`Go to page ${nextPage}`"
+          :disabled="nextPageDisabled ? '' : undefined"
         >
           <i class="pi pi-chevron-right chevron" />
         </RouterLink>
@@ -148,7 +121,7 @@ const pages = computed(() => {
     justify-center;
 
   .list {
-    @apply flex items-center;
+    @apply flex items-center gap-1.5;
 
     li {
       @apply inline-block;
@@ -166,7 +139,7 @@ const pages = computed(() => {
 
   .list,
   .page {
-    @apply transition-all duration-3000 ease-in-out;
+    @apply transition-all duration-300 ease-in-out;
   }
 
   .floating-pagination {
@@ -185,12 +158,13 @@ const pages = computed(() => {
       hover:shadow-[0_0_75px]
       hover:shadow-green-500;
   }
-
-  .floating-pagination.active {
+  /* ToDo: after switching to maximized ul immediately get width equals to all elements even nested
+      li elements have at first glance 0 width set by max-width. */
+  .floating-pagination.maximized {
     @apply -translate-y-5 rounded-lg scale-100;
 
     .list {
-      @apply max-w-[20em] gap-1.5 overflow-hidden;
+      @apply max-w-[20em] overflow-hidden;
     }
 
     .page:not([aria-current]) {
@@ -198,7 +172,7 @@ const pages = computed(() => {
     }
   }
 
-  .floating-pagination:not(.active) {
+  .floating-pagination:not(.maximized) {
     .list {
       gap: 0;
     }

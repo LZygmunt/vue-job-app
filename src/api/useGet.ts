@@ -1,14 +1,38 @@
-import prepareEndpoint from './utils/prepareEndpoint.ts'
-import resolveSearchParams from './utils/resolveSearchParams.ts'
-import type { EndpointParams } from './utils/utilTypes.ts'
 import {
   type DefaultError,
   type QueryKey,
   type QueryObserverOptions,
   useQuery,
+  type UseQueryOptions,
   type UseQueryReturnType,
 } from '@tanstack/vue-query'
-import { toValue } from 'vue'
+import { ref, toValue, unref, watchEffect } from 'vue'
+import { deepUnref } from '#/utils/deepUnref.ts'
+import type { DeepMaybeRefOrGetter } from '../utilityTypes.ts'
+import prepareEndpoint from './utils/prepareEndpoint.ts'
+import resolveSearchParams from './utils/resolveSearchParams.ts'
+import type { EndpointParams } from './utils/utilTypes.ts'
+
+type WithoutQueryKey<T> = Omit<T, 'queryKey'>
+
+type BaseQueryOptions<
+  TQueryFnData = unknown,
+  TError = DefaultError,
+  TData = TQueryFnData,
+  TQueryData = TQueryFnData,
+  TQueryKey extends QueryKey = QueryKey,
+> = Partial<
+  Omit<QueryObserverOptions<TQueryFnData, TError, TData, TQueryData, TQueryKey>, 'queryFn'>
+>
+
+type RawOptions<
+  TQueryFnData = unknown,
+  TError = DefaultError,
+  TData = TQueryFnData,
+  TQueryData = TQueryFnData,
+  TQueryKey extends QueryKey = QueryKey,
+  TEndpoint extends string = string,
+> = BaseQueryOptions<TQueryFnData, TError, TData, TQueryData, TQueryKey> & EndpointParams<TEndpoint>
 
 export type QueryOptions<
   TQueryFnData = unknown,
@@ -20,7 +44,7 @@ export type QueryOptions<
 > = Partial<
   Omit<QueryObserverOptions<TQueryFnData, TError, TData, TQueryData, TQueryKey>, 'queryFn'>
 >
-  & EndpointParams<TEndpoint>
+  & DeepMaybeRefOrGetter<EndpointParams<TEndpoint>>
 
 const useGet = <
   TQueryFnData = unknown,
@@ -32,28 +56,53 @@ const useGet = <
   endpoint: TEndpoint,
   options?: QueryOptions<TQueryFnData, TError, TData, TQueryFnData, TQueryKey, TEndpoint>,
 ): UseQueryReturnType<TData, TError> => {
-  const unwrappedOptions = toValue(options)
-  const queryKey: string[] = [endpoint]
-  const resolvedSearchParams = resolveSearchParams(unwrappedOptions?.searchParams)
+  const queryOptions =
+    ref<WithoutQueryKey<BaseQueryOptions<TQueryFnData, TError, TData, TQueryFnData, TQueryKey>>>()
+  const endpointOptions = ref<EndpointParams<TEndpoint>>()
+  const queryKey = ref<TQueryKey>([] as unknown as TQueryKey)
+  const resolvedSearchParams = ref('')
 
-  if (unwrappedOptions?.params) {
-    queryKey.push(...(Object.values(unwrappedOptions?.params) as string[]))
-  }
+  watchEffect(() => {
+    const {
+      params,
+      searchParams,
+      queryKey: _queryKey,
+      ...qOptions
+    } = (deepUnref(options) ?? {}) as RawOptions<
+      TQueryFnData,
+      TError,
+      TData,
+      TQueryFnData,
+      TQueryKey,
+      TEndpoint
+    >
+    queryOptions.value = qOptions
+    queryKey.value = [endpoint]
+    endpointOptions.value = { params, searchParams }
+    resolvedSearchParams.value = resolveSearchParams(searchParams)
 
-  if (resolvedSearchParams) {
-    queryKey.push(resolvedSearchParams)
-  }
+    if (params) {
+      queryKey.value.push(...Object.values(params))
+    }
 
-  if (unwrappedOptions?.queryKey) {
-    queryKey.push(unwrappedOptions?.queryKey as unknown as string)
-  }
+    if (resolvedSearchParams.value) {
+      queryKey.value.push(resolvedSearchParams.value)
+    }
+
+    if (_queryKey) {
+      queryKey.value.push(_queryKey)
+    }
+  })
 
   return useQuery({
+    ...(unref(queryOptions) as WithoutQueryKey<
+      UseQueryOptions<TQueryFnData, TError, TData, TQueryFnData, TQueryKey>
+    >),
     queryFn: async () => {
       const preparedEndpoint = prepareEndpoint({
         endpoint,
-        params: unwrappedOptions?.params,
-        searchParams: unwrappedOptions?.searchParams,
+        params: toValue(endpointOptions.value?.params),
+        searchParams: toValue(endpointOptions.value?.searchParams),
       })
       const res = await fetch(preparedEndpoint)
 
@@ -68,7 +117,6 @@ const useGet = <
       }
       return await res.json()
     },
-    ...(options as Record<string, unknown>),
     queryKey,
   })
 }
