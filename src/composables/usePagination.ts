@@ -15,16 +15,13 @@ const getRange = (start: number, end: number) => {
 
 const MAX_DISPLAYED_PAGES = 6
 
-export function usePagination({
-  lastPage,
-  currentPage,
-  maxDisplayedPages,
-}: DeepMaybeRefOrGetter<UsePaginationOptions>) {
+export function usePagination(options: DeepMaybeRefOrGetter<UsePaginationOptions>) {
   const _currentPage = ref(0)
   const _lastPage = ref(0)
   const _maxDisplayedPages = ref(MAX_DISPLAYED_PAGES)
 
   watchEffect(() => {
+    const { lastPage, currentPage, maxDisplayedPages } = toValue(options)
     _currentPage.value = toValue(currentPage)
     _lastPage.value = toValue(lastPage)
     const mdp = toValue(maxDisplayedPages)

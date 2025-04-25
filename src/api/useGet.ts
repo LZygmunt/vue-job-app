@@ -8,7 +8,7 @@ import {
 } from '@tanstack/vue-query'
 import { ref, toValue, unref, watchEffect } from 'vue'
 import { deepUnref } from '#/utils/deepUnref.ts'
-import type { DeepMaybeRefOrGetter } from '../utilityTypes.ts'
+import type { NestMaybeRefOrGetter } from '#/utilityTypes.ts'
 import prepareEndpoint from './utils/prepareEndpoint.ts'
 import resolveSearchParams from './utils/resolveSearchParams.ts'
 import type { EndpointParams } from './utils/utilTypes.ts'
@@ -44,7 +44,7 @@ export type QueryOptions<
 > = Partial<
   Omit<QueryObserverOptions<TQueryFnData, TError, TData, TQueryData, TQueryKey>, 'queryFn'>
 >
-  & DeepMaybeRefOrGetter<EndpointParams<TEndpoint>>
+  & NestMaybeRefOrGetter<EndpointParams<TEndpoint>>
 
 const useGet = <
   TQueryFnData = unknown,

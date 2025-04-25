@@ -1,4 +1,4 @@
-import type { MaybeRefOrGetter } from 'vue'
+import { keepPreviousData as VQKeepPreviousData } from '@tanstack/vue-query'
 import { MINUTE } from '#/constans.ts'
 import type { DeepMaybeRefOrGetter } from '#/utilityTypes.ts'
 import type { JobOfferDTO } from './jobDTO.ts'
@@ -9,20 +9,23 @@ import type { SearchParams } from './utils/utilTypes.ts'
 export type JobOffersDTO = PaginatedList<JobOfferDTO>
 
 export interface UseGetJobsOptions<TJobs> {
-  searchParams?: MaybeRefOrGetter<DeepMaybeRefOrGetter<SearchParams>>
+  searchParams?: DeepMaybeRefOrGetter<SearchParams>
   select?: (data: JobOffersDTO) => TJobs
+  keepPreviousData?: boolean
 }
 
 const ENDPOINT = '/jobs' as const
 
-const useGetJobs = <TJobs = JobOffersDTO>({ searchParams, select }: UseGetJobsOptions<TJobs>) =>
+const useGetJobs = <TJobs = JobOffersDTO>({
+  searchParams,
+  select,
+  keepPreviousData = true,
+}: UseGetJobsOptions<TJobs>) =>
   useGet<JobOffersDTO, TJobs, [], typeof ENDPOINT>(ENDPOINT, {
-    // ToDo: make type more clear
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-expect-error
     searchParams,
     staleTime: 5 * MINUTE,
     select,
+    placeholderData: keepPreviousData ? VQKeepPreviousData : undefined,
   })
 
 export default useGetJobs
