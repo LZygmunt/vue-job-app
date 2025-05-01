@@ -1,7 +1,10 @@
 <script setup lang="ts">
 import { ref, toRefs, useTemplateRef } from 'vue'
+
 import { useCurrentPage } from '#/composables/useCurrentPage.ts'
 import { usePagination } from '#/composables/usePagination.ts'
+import { useTimeout } from '#/composables/useTimeout.ts'
+import { SECOND } from '#/constans.ts'
 
 interface FloatingPaginationProps {
   lastPage?: number
@@ -12,31 +15,51 @@ const props = withDefaults(defineProps<FloatingPaginationProps>(), {
 })
 const { lastPage } = toRefs(props)
 
-const floatingPagination = useTemplateRef<HTMLDivElement>('floating-pagination')
+const floatingPagination = useTemplateRef<HTMLUListElement>('floating-pagination')
 
 const isMaximized = ref(false)
-const timeoutId = ref<number | null>(null)
-const TIMEOUT_5_SECONDS = 5000
+const clickTimestamp = ref<number | null>(null)
+const MINIMIZE_TIMEOUT = 5 * SECOND
+const RESET_CLICK_TIMESTAMP_TIMEOUT = 0.5 * SECOND
+const MAXIMIZE_TIMEOUT = 0.7 * SECOND
 
-const delayMinimizePagination = () =>
-  setTimeout(() => {
-    if (floatingPagination.value?.matches(':hover')) {
-      timeoutId.value = delayMinimizePagination()
-
-      return
-    }
+const maximizeTimeoutRegister = useTimeout({
+  condition: () => !!floatingPagination.value?.matches(':hover'),
+  effect: () => {
     isMaximized.value = false
-    timeoutId.value = null
-  }, TIMEOUT_5_SECONDS)
+  },
+  delay: MINIMIZE_TIMEOUT,
+})
 
-const handle = () => {
-  if (timeoutId.value) return
+const clickTimeoutRegister = useTimeout({
+  condition: () => !!clickTimestamp.value && Date.now() - clickTimestamp.value < MAXIMIZE_TIMEOUT,
+  effect: () => {
+    clickTimestamp.value = null
+  },
+  delay: RESET_CLICK_TIMESTAMP_TIMEOUT,
+})
 
-  isMaximized.value = true
-  timeoutId.value = delayMinimizePagination()
+const onEnterPagination = () => {
+  maximizeTimeoutRegister.startTimeout({
+    condition: (timeoutId) => !!(timeoutId || clickTimestamp.value),
+    effect: () => {
+      isMaximized.value = true
+    },
+    delay: MAXIMIZE_TIMEOUT,
+  })
 }
 
-// ToDo: make possible to interact with minimized pagination
+const onClickPagination = () => {
+  clickTimeoutRegister.startTimeout({
+    condition: () => isMaximized.value,
+    effect: () => {
+      clickTimestamp.value = Date.now()
+      maximizeTimeoutRegister.resetTimeout()
+    },
+    delay: 0,
+  })
+}
+
 const { currentPage } = useCurrentPage()
 const { prevPage, prevPageDisabled, nextPage, nextPageDisabled, pages } = usePagination({
   lastPage,
@@ -45,64 +68,59 @@ const { prevPage, prevPageDisabled, nextPage, nextPageDisabled, pages } = usePag
 </script>
 
 <template>
-  <div
-    ref="floating-pagination"
-    class="floating-pagination__wrapper"
-  >
+  <div class="floating-pagination">
     <ul
-      class="floating-pagination list"
-      :class="isMaximized ? 'maximized' : ''"
-      @mouseover="handle"
+      ref="floating-pagination"
+      class="floating-pagination__list"
+      :class="[
+        isMaximized ? 'floating-pagination__list--maximized' : '',
+        clickTimestamp !== null ? 'floating-pagination__list--focused' : '',
+      ]"
+      @click="onClickPagination"
+      @mouseenter="onEnterPagination"
     >
       <li>
         <RouterLink
+          class="floating-pagination__item"
           :to="`?page=${prevPage}`"
           :aria-label="`Go to page ${prevPage}`"
+          :aria-current="undefined"
           :disabled="prevPageDisabled ? '' : undefined"
         >
-          <i class="pi pi-chevron-left chevron" />
+          <i class="pi pi-chevron-left" />
+        </RouterLink>
+      </li>
+      <li
+        v-for="page in pages"
+        :key="page"
+      >
+        <span
+          v-if="page === -1"
+          class="floating-pagination__item--dots"
+        >
+          ...
+        </span>
+        <RouterLink
+          v-else
+          class="floating-pagination__item"
+          :to="`?page=${page}`"
+          :tabindex="page === currentPage ? 0 : undefined"
+          :aria-current="page === currentPage ? 'page' : undefined"
+          :aria-label="page > 0 ? `Go to page ${page}` : undefined"
+          :aria-hidden="!isMaximized && page !== currentPage ? 'true' : undefined"
+        >
+          {{ page }}
         </RouterLink>
       </li>
       <li>
-        <ul class="list">
-          <li
-            v-for="page in pages"
-            :key="page"
-            class="page"
-            :aria-current="page === currentPage ? 'page' : undefined"
-            :aria-label="page > 0 ? `Go to page ${page}` : undefined"
-            :aria-hidden="!isMaximized && page !== currentPage ? 'true' : undefined"
-          >
-            <span
-              v-if="page === -1"
-              class="page__item--dots"
-            >
-              ...
-            </span>
-            <RouterLink
-              v-else-if="page !== currentPage"
-              :to="`?page=${page}`"
-              class="page__item"
-            >
-              {{ page }}
-            </RouterLink>
-            <span
-              v-else
-              class="page__item"
-              tabindex="0"
-            >
-              {{ page }}
-            </span>
-          </li>
-        </ul>
-      </li>
-      <li>
         <RouterLink
+          class="floating-pagination__item"
           :to="`?page=${nextPage}`"
           :aria-label="`Go to page ${nextPage}`"
+          :aria-current="undefined"
           :disabled="nextPageDisabled ? '' : undefined"
         >
-          <i class="pi pi-chevron-right chevron" />
+          <i class="pi pi-chevron-right" />
         </RouterLink>
       </li>
     </ul>
@@ -112,7 +130,7 @@ const { prevPage, prevPageDisabled, nextPage, nextPageDisabled, pages } = usePag
 <style scoped>
 @reference '#/assets/main.css';
 
-.floating-pagination__wrapper {
+.floating-pagination {
   @apply fixed
     bottom-0
     w-full
@@ -120,32 +138,8 @@ const { prevPage, prevPageDisabled, nextPage, nextPageDisabled, pages } = usePag
     items-center
     justify-center;
 
-  .list {
-    @apply flex items-center gap-1.5;
-
-    li {
-      @apply inline-block;
-    }
-    li:not(.page[aria-current]) {
-      @apply overflow-hidden;
-    }
-    li a {
-      @apply text-inherit;
-    }
-    .list {
-      @apply border-x border-neutral-700 px-1.5;
-    }
-  }
-
-  .list,
-  .page {
-    @apply transition-all duration-300 ease-in-out;
-  }
-
-  .floating-pagination {
-    @apply px-2
-      py-1
-      rounded-t-lg
+  .floating-pagination__list {
+    @apply rounded-t-lg
       dark:bg-neutral-900
       dark:shadow-neutral-900
       w-fit
@@ -155,93 +149,48 @@ const { prevPage, prevPageDisabled, nextPage, nextPageDisabled, pages } = usePag
       border-neutral-700
       scale-75
       translate-y-1
+      outline-green-700
       hover:shadow-[0_0_75px]
       hover:shadow-green-500;
-  }
-  /* ToDo: after switching to maximized ul immediately get width equals to all elements even nested
-      li elements have at first glance 0 width set by max-width. */
-  .floating-pagination.maximized {
-    @apply -translate-y-5 rounded-lg scale-100;
 
-    .list {
-      @apply max-w-[20em] overflow-hidden;
-    }
-
-    .page:not([aria-current]) {
-      @apply max-w-[100%] opacity-100;
+    li {
+      @apply inline-block
+      first-of-type:border-r-1
+      last-of-type:border-l-1
+      border-neutral-700;
     }
   }
 
-  .floating-pagination:not(.maximized) {
-    .list {
-      gap: 0;
+  .floating-pagination__list,
+  .floating-pagination__item {
+    @apply transition-all duration-300 ease-in-out;
+  }
+  .floating-pagination__item {
+    @apply px-0 py-0.5 text-neutral-50/70 hover:text-neutral-50 block;
+    &[aria-current] {
+      @apply px-1.5 text-green-500 cursor-default;
     }
-    .chevron {
-      @apply text-neutral-50/50;
+    li:is(:first-of-type, :last-of-type) & {
+      @apply px-1 max-w-full opacity-100;
     }
-
-    .page[aria-current] {
-      @apply text-green-500/80;
-    }
-
-    .page:not([aria-current]) {
-      @apply px-0 max-w-0 opacity-0;
+    &:not([aria-current]) {
+      @apply max-w-0 opacity-0;
     }
   }
-}
 
-.chevron {
-  @apply text-neutral-50/70 hover:text-neutral-50;
-}
+  .floating-pagination__list.floating-pagination__list--maximized {
+    @apply -translate-y-5 rounded-lg scale-125;
 
-.page {
-  @apply text-neutral-50/70 hover:text-neutral-50 inline-block;
-
-  &[aria-current] {
-    @apply text-green-500 cursor-default;
-  }
-
-  .page__item {
-    @apply px-1;
-  }
-  &:has(.page__item--dots) {
-    @apply pointer-events-none select-none;
-  }
-}
-
-@keyframes show {
-  from {
-    .list {
-      gap: 0;
+    .floating-pagination__item {
+      @apply px-1.5;
     }
-    .chevron {
-      color: color-mix(in oklab, var(--color-neutral-50) 50%, transparent);
-    }
-
-    .page[aria-current] {
-      color: color-mix(in oklab, var(--color-green-500) 80%, transparent);
-    }
-
-    .page:not([aria-current]) {
-      padding-inline: 0;
-      max-width: 0;
-      opacity: 0;
+    li:not(:first-of-type, :last-of-type) .floating-pagination__item:not([aria-current]) {
+      @apply max-w-[2ch] opacity-100;
     }
   }
-  to {
-    translate: 0 -1.25rem;
-    border-radius: 0.5rem;
-    scale: 1;
 
-    .list {
-      max-width: 20em;
-      gap: 0.375rem;
-    }
-
-    .page:not([aria-current]) {
-      max-width: 100%;
-      opacity: 1;
-    }
+  .floating-pagination__list:focus {
+    @apply outline-1 outline-green-700 border-green-700/60;
   }
 }
 </style>
