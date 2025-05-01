@@ -166,15 +166,24 @@ const { prevPage, prevPageDisabled, nextPage, nextPageDisabled, pages } = usePag
     @apply transition-all duration-300 ease-in-out;
   }
   .floating-pagination__item {
-    @apply px-0 py-0.5 text-neutral-50/70 hover:text-neutral-50 block;
+    @apply px-0
+      py-0.5
+      text-neutral-50/70
+      hover:text-neutral-50
+      block
+      rounded-xs
+      focus-visible:outline-2 focus:outline-2
+    focus-visible:outline-green-700 focus:outline-green-700
+    focus-visible:border-green-700/60 focus:border-green-700/60
+    focus-visible:border-1 focus:border-1;
     &[aria-current] {
       @apply px-1.5 text-green-500 cursor-default;
     }
     li:is(:first-of-type, :last-of-type) & {
-      @apply px-1 max-w-full opacity-100;
+      @apply px-1;
     }
-    &:not([aria-current]) {
-      @apply max-w-0 opacity-0;
+    li:not(:first-of-type, :last-of-type) &:not([aria-current]) {
+      @apply max-w-0 opacity-0 invisible;
     }
   }
 
@@ -185,12 +194,12 @@ const { prevPage, prevPageDisabled, nextPage, nextPageDisabled, pages } = usePag
       @apply px-1.5;
     }
     li:not(:first-of-type, :last-of-type) .floating-pagination__item:not([aria-current]) {
-      @apply max-w-[2ch] opacity-100;
+      @apply max-w-[2ch] opacity-100 visible;
     }
   }
 
   .floating-pagination__list:focus {
-    @apply outline-1 outline-green-700 border-green-700/60;
+    @apply outline-2 outline-green-700 border-green-700/60;
   }
 }
 </style>
