@@ -3,7 +3,6 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/../jobs-server/.idea/jobs-server.iml" filepath="$PROJECT_DIR$/../jobs-server/.idea/jobs-server.iml" />
-      <module fileurl="file://$PROJECT_DIR$/../vue-crash-2024/.idea/vue-crash-2024.iml" filepath="$PROJECT_DIR$/../vue-crash-2024/.idea/vue-crash-2024.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/vue-job-app.iml" filepath="$PROJECT_DIR$/.idea/vue-job-app.iml" />
     </modules>
   </component>

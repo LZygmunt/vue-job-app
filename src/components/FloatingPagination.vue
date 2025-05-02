@@ -96,7 +96,7 @@ const { prevPage, prevPageDisabled, nextPage, nextPageDisabled, pages } = usePag
       >
         <span
           v-if="page === -1"
-          class="floating-pagination__item--dots"
+          class="floating-pagination__item floating-pagination__item--dots"
         >
           ...
         </span>
@@ -172,10 +172,10 @@ const { prevPage, prevPageDisabled, nextPage, nextPageDisabled, pages } = usePag
       hover:text-neutral-50
       block
       rounded-xs
-      focus-visible:outline-2 focus:outline-2
-    focus-visible:outline-green-700 focus:outline-green-700
-    focus-visible:border-green-700/60 focus:border-green-700/60
-    focus-visible:border-1 focus:border-1;
+      focus-visible:outline-2
+      focus-visible:outline-green-700
+      focus-visible:border-green-700/60
+      focus-visible:border-1;
     &[aria-current] {
       @apply px-1.5 text-green-500 cursor-default;
     }
@@ -187,6 +187,10 @@ const { prevPage, prevPageDisabled, nextPage, nextPageDisabled, pages } = usePag
     }
   }
 
+  .floating-pagination__item--dots {
+    @apply hover:text-neutral-50/70;
+  }
+
   .floating-pagination__list.floating-pagination__list--maximized {
     @apply -translate-y-5 rounded-lg scale-125;
 
@@ -194,11 +198,17 @@ const { prevPage, prevPageDisabled, nextPage, nextPageDisabled, pages } = usePag
       @apply px-1.5;
     }
     li:not(:first-of-type, :last-of-type) .floating-pagination__item:not([aria-current]) {
-      @apply max-w-[2ch] opacity-100 visible;
+      @apply max-w-[4ch] opacity-100 visible;
+    }
+    li:nth-of-type(2) .floating-pagination__item {
+      @apply pl-2;
+    }
+    li:nth-last-of-type(2) .floating-pagination__item {
+      @apply pr-2;
     }
   }
 
-  .floating-pagination__list:focus {
+  .floating-pagination__list--focused {
     @apply outline-2 outline-green-700 border-green-700/60;
   }
 }
