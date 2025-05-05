@@ -47,7 +47,7 @@ export default defineConfigWithVueTs(
           ],
           pathGroups: [
             {
-              pattern: '?@vue*|@vite',
+              pattern: '?(@)+(vue*|vite*)',
               group: 'external',
               position: 'before',
             },
