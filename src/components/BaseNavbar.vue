@@ -1,13 +1,17 @@
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed, ref } from 'vue'
 import { type RouteRecordNameGeneric, useRoute } from 'vue-router'
+
 import {
   JOB_DETAILS_ROUTE_NAME,
   JOBS_MAIN_ROUTE_NAME,
   JOBS_ROUTE_NAME,
 } from '#/router/jobsRouteRecord.ts'
 
+import BaseButton from './BaseButton.vue'
+
 const route = useRoute()
+const isModalDisplayed = ref(false)
 
 const isJobsActive = computed(() => {
   const jobsRouteNames = [
@@ -20,6 +24,10 @@ const isJobsActive = computed(() => {
 
   return route.matched.every((matched) => matched.name && jobsRouteNames.includes(matched.name))
 })
+
+const displayPreferencesModal = () => {
+  isModalDisplayed.value = true
+}
 </script>
 
 <template>
@@ -29,20 +37,23 @@ const isJobsActive = computed(() => {
         to="/"
         class="link"
         activeClass="active"
-        >Home</RouterLink
       >
+        Home
+      </RouterLink>
       <RouterLink
         to="/jobs"
         class="link"
         :class="{ active: isJobsActive }"
-        >Jobs</RouterLink
       >
+        Jobs
+      </RouterLink>
       <RouterLink
         to="/jobs/add"
         class="link"
         activeClass="active"
-        >Add job</RouterLink
       >
+        Add job
+      </RouterLink>
     </nav>
     <h2>
       <img
@@ -54,6 +65,12 @@ const isJobsActive = computed(() => {
       />
       <span>Vue Jobs</span>
     </h2>
+    <BaseButton
+      class="icon-button"
+      @click="displayPreferencesModal"
+    >
+      <i class="pi pi-cog pi-rota" />
+    </BaseButton>
   </header>
 </template>
 
@@ -61,11 +78,11 @@ const isJobsActive = computed(() => {
 @reference '#/assets/main.css';
 
 header {
-  @apply flex
+  @apply grid
+    grid-cols-[1fr_auto_auto]
+    gap-2
     items-center
-    justify-between
     px-10
-    py-5.5
     sticky
     top-0
     h-(--navbar-height)
@@ -94,6 +111,7 @@ nav {
       py-1
       rounded-xs
       hover:bg-green-800
+      hover:dark:text-green-400
       hover:dark:bg-neutral-800;
   }
 }
@@ -105,5 +123,21 @@ nav {
   dark:text-green-500
   border-b
   dark:border-b-green-500;
+}
+
+.icon-button {
+  @apply p-[0.5em]
+    text-2xl
+    leading-none
+    rounded-full
+    bg-transparent
+    dark:text-green-500
+    hover:dark:text-green-400
+    hover:dark:bg-neutral-800
+    aspect-square
+    transition-transform
+    duration-200
+    ease-in-out
+    hover:rotate-90;
 }
 </style>
