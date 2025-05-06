@@ -1,9 +1,11 @@
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed, provide } from 'vue'
 
 import type { SearchParams } from '#/api/utils/utilTypes.ts'
 import JobBrowseSection from '#/components/JobBrowseSection.vue'
 import { useCurrentPage } from '#/composables/useCurrentPage.ts'
+import { PaginationTimeoutsKey } from '#/keys.ts'
+import { usePreferencesStore } from '#/store/preferences.ts'
 
 const { currentPage } = useCurrentPage()
 
@@ -14,6 +16,13 @@ const searchParams = computed(
       perPage: 12,
     }) as unknown as SearchParams,
 )
+
+const preferencesStore = usePreferencesStore()
+provide(PaginationTimeoutsKey, {
+  minimizeTimeout: preferencesStore.minimizeTimeout,
+  maximizeTimeout: preferencesStore.maximizeTimeout,
+  resetClickRegisterTimeout: preferencesStore.resetClickRegisterTimeout,
+})
 </script>
 
 <template>

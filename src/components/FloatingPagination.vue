@@ -1,12 +1,14 @@
 <script setup lang="ts">
-import { ref, toRefs, useTemplateRef } from 'vue'
+import { inject, ref, toRefs, useTemplateRef } from 'vue'
 
 import { useCurrentPage } from '#/composables/useCurrentPage.ts'
 import { usePagination } from '#/composables/usePagination.ts'
 import { useTimeout } from '#/composables/useTimeout.ts'
-import { SECOND } from '#/constans.ts'
+import { MAXIMIZE_TIMEOUT, MINIMIZE_TIMEOUT, RESET_CLICK_TIMESTAMP_TIMEOUT } from '#/constans.ts'
+import { PaginationTimeoutsKey } from '#/keys.ts'
+import { deepUnref } from '#/utils/deepUnref.ts'
 
-interface FloatingPaginationProps {
+export interface FloatingPaginationProps {
   lastPage?: number
 }
 
@@ -15,28 +17,36 @@ const props = withDefaults(defineProps<FloatingPaginationProps>(), {
 })
 const { lastPage } = toRefs(props)
 
+const paginationTimeouts = inject(PaginationTimeoutsKey, {
+  maximizeTimeout: MAXIMIZE_TIMEOUT,
+  minimizeTimeout: MINIMIZE_TIMEOUT,
+  resetClickRegisterTimeout: RESET_CLICK_TIMESTAMP_TIMEOUT,
+})
+const {
+  maximizeTimeout = MAXIMIZE_TIMEOUT,
+  minimizeTimeout = MINIMIZE_TIMEOUT,
+  resetClickRegisterTimeout = RESET_CLICK_TIMESTAMP_TIMEOUT,
+} = deepUnref(paginationTimeouts)
+
 const floatingPagination = useTemplateRef<HTMLUListElement>('floating-pagination')
 
 const isMaximized = ref(false)
 const clickTimestamp = ref<number | null>(null)
-const MINIMIZE_TIMEOUT = 5 * SECOND
-const RESET_CLICK_TIMESTAMP_TIMEOUT = 0.5 * SECOND
-const MAXIMIZE_TIMEOUT = 0.7 * SECOND
 
 const maximizeTimeoutRegister = useTimeout({
   condition: () => !!floatingPagination.value?.matches(':hover'),
   effect: () => {
     isMaximized.value = false
   },
-  delay: MINIMIZE_TIMEOUT,
+  delay: minimizeTimeout,
 })
 
 const clickTimeoutRegister = useTimeout({
-  condition: () => !!clickTimestamp.value && Date.now() - clickTimestamp.value < MAXIMIZE_TIMEOUT,
+  condition: () => !!clickTimestamp.value && Date.now() - clickTimestamp.value < maximizeTimeout,
   effect: () => {
     clickTimestamp.value = null
   },
-  delay: RESET_CLICK_TIMESTAMP_TIMEOUT,
+  delay: resetClickRegisterTimeout,
 })
 
 const onEnterPagination = () => {
@@ -45,7 +55,7 @@ const onEnterPagination = () => {
     effect: () => {
       isMaximized.value = true
     },
-    delay: MAXIMIZE_TIMEOUT,
+    delay: maximizeTimeout,
   })
 }
 

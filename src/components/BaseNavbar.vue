@@ -9,6 +9,7 @@ import {
 } from '#/router/jobsRouteRecord.ts'
 
 import BaseButton from './BaseButton.vue'
+import BaseModal from './BaseModal.vue'
 
 const route = useRoute()
 const isModalDisplayed = ref(false)
@@ -65,12 +66,27 @@ const displayPreferencesModal = () => {
       />
       <span>Vue Jobs</span>
     </h2>
-    <BaseButton
-      class="icon-button"
-      @click="displayPreferencesModal"
-    >
-      <i class="pi pi-cog pi-rota" />
-    </BaseButton>
+    <BaseModal>
+      <template #button="buttonProps">
+        <BaseButton
+          class="icon-button icon-button--lg"
+          disabled
+          @click="buttonProps.onClick"
+        >
+          <i class="pi pi-cog" />
+        </BaseButton>
+      </template>
+      <template #header="headerProps">
+        <span>Settings</span>
+        <BaseButton
+          class="icon-button icon-button--close"
+          @click="headerProps.onClickCancel"
+        >
+          <i class="pi pi-times" />
+        </BaseButton>
+      </template>
+      <template #default> </template>
+    </BaseModal>
   </header>
 </template>
 
@@ -127,17 +143,27 @@ nav {
 
 .icon-button {
   @apply p-[0.5em]
-    text-2xl
     leading-none
     rounded-full
     bg-transparent
     dark:text-green-500
-    hover:dark:text-green-400
-    hover:dark:bg-neutral-800
     aspect-square
     transition-transform
     duration-200
     ease-in-out
-    hover:rotate-90;
+    w-[1em]
+    box-content;
+
+  &.icon-button--lg {
+    @apply text-2xl;
+  }
+
+  &.icon-button--close {
+    @apply mr-[-0.5em];
+  }
+
+  &:not([disabled]) {
+    @apply hover:rotate-90 hover:dark:text-green-400 hover:dark:bg-neutral-800;
+  }
 }
 </style>

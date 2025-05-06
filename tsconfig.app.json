@@ -16,6 +16,7 @@
       "#/assets/*": ["./src/assets/*"],
       "#/components/*": ["./src/components/*"],
       "#/composables/*": ["./src/composables/*"],
+      "#/store/*": ["./src/store/*"],
       "#/router/*": ["./src/router/*"],
       "#/views/*": ["./src/views/*"],
       "#/utils/*": ["./src/utils/*"],
