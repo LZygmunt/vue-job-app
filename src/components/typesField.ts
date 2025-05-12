@@ -3,8 +3,8 @@ export interface FieldProps {
   required?: boolean
 }
 
-export interface Option {
-  value: string | number
+export interface Option<TValue extends string | number = string | number> {
+  value: TValue
   label: string
 }
 

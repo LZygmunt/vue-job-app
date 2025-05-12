@@ -42,7 +42,7 @@ const onTriggerCloseDialog = () => {
     >
       <div
         v-if="!disableHeader"
-        class="modal__header p-3 grid grid-cols-[1fr_auto_1fr] gap-1 items-center justify-center text-green-500"
+        class="modal__header p-3 grid grid-cols-[1fr_auto_1fr] gap-1 items-center justify-center dark:text-green-500"
         v-bind="headerProps"
       >
         <slot

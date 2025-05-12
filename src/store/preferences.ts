@@ -5,13 +5,15 @@ import { defineStore } from 'pinia'
 import { MAXIMIZE_TIMEOUT, MINIMIZE_TIMEOUT, RESET_CLICK_TIMESTAMP_TIMEOUT } from '#/constans.ts'
 
 export const usePreferencesStore = defineStore('preferences', () => {
-  const darkMode = ref(false)
+  type ThemeMode = 'light' | 'dark' | 'system'
+
+  const themeMode = ref<ThemeMode>('system')
   const minimizeTimeout = ref(MINIMIZE_TIMEOUT)
   const maximizeTimeout = ref(MAXIMIZE_TIMEOUT)
   const resetClickRegisterTimeout = ref(RESET_CLICK_TIMESTAMP_TIMEOUT)
 
-  const toggleDarkMode = () => {
-    darkMode.value = !darkMode.value
+  const toggleThemeMode = (newMode: ThemeMode) => {
+    themeMode.value = newMode
   }
 
   const changeMinimizeTimeout = (newValue: number) => {
@@ -27,11 +29,11 @@ export const usePreferencesStore = defineStore('preferences', () => {
   }
 
   return {
-    darkMode,
+    themeMode,
     minimizeTimeout,
     maximizeTimeout,
     resetClickRegisterTimeout,
-    toggleDarkMode,
+    toggleThemeMode,
     changeMinimizeTimeout,
     changeMaximizeTimeout,
     changeResetClickRegisterTimeout,

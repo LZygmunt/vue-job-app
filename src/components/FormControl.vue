@@ -8,6 +8,10 @@ import BaseRadioInput, { type BaseRadioInputProps } from './BaseRadioInput.vue'
 import BaseSelect, { type BaseSelectInputProps } from './BaseSelect.vue'
 import BaseTextarea, { type BaseTextareaProps } from './BaseTextarea.vue'
 import BaseTextInput, { type BaseTextInputProps } from './BaseTextInput.vue'
+import BaseToggleInput, {
+  type BaseToggleInputProps,
+  type ToggleOption,
+} from './BaseToggleInput.vue'
 
 type FormControlLayoutVariant = 'inline' | 'stacked'
 
@@ -15,6 +19,9 @@ interface FormControlProps {
   label?: string
   variant?: FormControlLayoutVariant
 }
+
+type TempTypeForToggleInputProps<TVal extends string | number = string | number> =
+  BaseToggleInputProps<TVal, ToggleOption<TVal>[]>
 
 type InputProps = FormControlProps
   & (
@@ -24,6 +31,7 @@ type InputProps = FormControlProps
     | BaseCheckboxInputProps
     | BaseRadioInputProps
     | BaseTextareaProps
+    | TempTypeForToggleInputProps
   )
 
 const props = withDefaults(defineProps<InputProps>(), {
@@ -41,7 +49,7 @@ const updateValue = (value: string | number | boolean | (string | number)[]) => 
 
 const inputPropsWithAttrs = computed(() => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const { label, ...restProps } = props
+  const { label, variant, ...restProps } = props
   return { ...restProps, ...attrs }
 })
 
@@ -51,6 +59,7 @@ const isNumber = computed(() => props.type === 'number')
 const isSelect = computed(() => props.type === 'select')
 const isCheckbox = computed(() => props.type === 'checkbox')
 const isRadio = computed(() => props.type === 'radio')
+const isToggle = computed(() => props.type === 'toggle')
 
 const actualVariant = computed(() => props.variant ?? (isCheckbox.value ? 'inline' : 'stacked'))
 const actualWidth = computed(() => inputPropsWithAttrs.value.width ?? 'auto')
@@ -61,7 +70,7 @@ const wrapperClasses = computed(() =>
 
 <template>
   <div
-    class="grid gap-2"
+    class="grid gap-2 text-gray-700 dark:text-white"
     :class="wrapperClasses"
   >
     <BaseLabel
@@ -110,6 +119,12 @@ const wrapperClasses = computed(() =>
       v-if="isRadio"
       v-bind="inputPropsWithAttrs as BaseRadioInputProps"
       type="radio"
+      @update:modelValue="updateValue"
+    />
+
+    <BaseToggleInput
+      v-if="isToggle"
+      v-bind="inputPropsWithAttrs as TempTypeForToggleInputProps"
       @update:modelValue="updateValue"
     />
   </div>
