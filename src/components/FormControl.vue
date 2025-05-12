@@ -1,15 +1,19 @@
 <script setup lang="ts">
-import { computed, useAttrs } from 'vue'
-import BaseTextarea, { type BaseTextareaProps } from './BaseTextarea.vue'
+import { computed, type InputHTMLAttributes, useAttrs } from 'vue'
+
+import BaseCheckboxInput, { type BaseCheckboxInputProps } from './BaseCheckboxInput.vue'
+import BaseLabel from './BaseLabel.vue'
+import BaseNumberInput, { type BaseNumberInputProps } from './BaseNumberInput.vue'
 import BaseRadioInput, { type BaseRadioInputProps } from './BaseRadioInput.vue'
 import BaseSelect, { type BaseSelectInputProps } from './BaseSelect.vue'
-import BaseCheckboxInput, { type BaseCheckboxInputProps } from './BaseCheckboxInput.vue'
-import BaseNumberInput, { type BaseNumberInputProps } from './BaseNumberInput.vue'
+import BaseTextarea, { type BaseTextareaProps } from './BaseTextarea.vue'
 import BaseTextInput, { type BaseTextInputProps } from './BaseTextInput.vue'
-import BaseLabel from './BaseLabel.vue'
+
+type FormControlLayoutVariant = 'inline' | 'stacked'
 
 interface FormControlProps {
   label?: string
+  variant?: FormControlLayoutVariant
 }
 
 type InputProps = FormControlProps
@@ -22,12 +26,14 @@ type InputProps = FormControlProps
     | BaseTextareaProps
   )
 
-const props = defineProps<InputProps>()
+const props = withDefaults(defineProps<InputProps>(), {
+  fullWidth: undefined,
+})
 const emit = defineEmits(['update:modelValue'])
 defineOptions({
   inheritAttrs: false,
 })
-const attrs = useAttrs()
+const attrs = useAttrs() as InputHTMLAttributes
 
 const updateValue = (value: string | number | boolean | (string | number)[]) => {
   emit('update:modelValue', value)
@@ -45,10 +51,19 @@ const isNumber = computed(() => props.type === 'number')
 const isSelect = computed(() => props.type === 'select')
 const isCheckbox = computed(() => props.type === 'checkbox')
 const isRadio = computed(() => props.type === 'radio')
+
+const actualVariant = computed(() => props.variant ?? (isCheckbox.value ? 'inline' : 'stacked'))
+const actualWidth = computed(() => inputPropsWithAttrs.value.width ?? 'auto')
+const wrapperClasses = computed(() =>
+  actualVariant.value === 'inline' ? `grid-cols-[1fr_${actualWidth.value}] items-center` : '',
+)
 </script>
 
 <template>
-  <div>
+  <div
+    class="grid gap-2"
+    :class="wrapperClasses"
+  >
     <BaseLabel
       v-if="props.label"
       :name="props.name"

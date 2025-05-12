@@ -16,7 +16,7 @@ const props = defineProps<BaseNumberInputProps>()
 const emit = defineEmits<BaseTextInputEmit>()
 
 const handleValueUpdate = (value: number) => {
-  emit('update:modelValue', value)
+  emit('update:modelValue', Number(value))
 }
 </script>
 

@@ -9,7 +9,9 @@ interface BaseCheckboxInputEmit {
   (e: 'update:modelValue', value: boolean): void
 }
 
-const props = defineProps<BaseCheckboxInputProps>()
+const props = withDefaults(defineProps<BaseCheckboxInputProps>(), {
+  fullWidth: false,
+})
 const emit = defineEmits<BaseCheckboxInputEmit>()
 
 const handleValueUpdate = (value: boolean) => {
@@ -19,6 +21,7 @@ const handleValueUpdate = (value: boolean) => {
 
 <template>
   <BaseInput
+    class="inline"
     v-bind="props"
     @update:modelValue="handleValueUpdate"
   />

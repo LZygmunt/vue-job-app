@@ -1,5 +1,6 @@
 <script setup lang="ts" generic="TVal extends string | number | boolean | (string | number)[]">
 import { computed, useAttrs } from 'vue'
+
 import type { FieldProps } from './typesField.ts'
 
 export interface BaseInputProps<TValue extends string | number | boolean | (string | number)[]>
@@ -8,6 +9,7 @@ export interface BaseInputProps<TValue extends string | number | boolean | (stri
   modelValue: TValue
   placeholder?: string
   class?: string
+  fullWidth?: boolean
 }
 
 export interface BaseInputEmit<TValue> {
@@ -21,6 +23,7 @@ interface BaseInputInternalProps {
 const props = withDefaults(defineProps<BaseInputProps<TVal> & BaseInputInternalProps>(), {
   name: '',
   tag: 'input',
+  fullWidth: true,
 })
 const emit = defineEmits<BaseInputEmit<TVal>>()
 const attrs = useAttrs()
@@ -42,17 +45,12 @@ const inputProps = computed(() => {
     :id="props.name"
     :value="props.modelValue"
     v-bind="inputProps"
-    class="input"
+    class="border rounded py-2 px-3"
+    :class="props.fullWidth && 'w-full'"
     @input="handleInput"
   >
     <slot></slot>
   </component>
 </template>
 
-<style>
-@reference '#/assets/main.css';
-
-.input {
-  @apply border rounded w-full py-2 px-3 mb-2;
-}
-</style>
+<style scoped></style>

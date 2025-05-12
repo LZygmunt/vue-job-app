@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, ref } from 'vue'
+import { computed } from 'vue'
 import { type RouteRecordNameGeneric, useRoute } from 'vue-router'
 
 import {
@@ -8,11 +8,9 @@ import {
   JOBS_ROUTE_NAME,
 } from '#/router/jobsRouteRecord.ts'
 
-import BaseButton from './BaseButton.vue'
-import BaseModal from './BaseModal.vue'
+import PreferencesModal from './PreferencesModal.vue'
 
 const route = useRoute()
-const isModalDisplayed = ref(false)
 
 const isJobsActive = computed(() => {
   const jobsRouteNames = [
@@ -25,10 +23,6 @@ const isJobsActive = computed(() => {
 
   return route.matched.every((matched) => matched.name && jobsRouteNames.includes(matched.name))
 })
-
-const displayPreferencesModal = () => {
-  isModalDisplayed.value = true
-}
 </script>
 
 <template>
@@ -66,27 +60,8 @@ const displayPreferencesModal = () => {
       />
       <span>Vue Jobs</span>
     </h2>
-    <BaseModal>
-      <template #button="buttonProps">
-        <BaseButton
-          class="icon-button icon-button--lg"
-          disabled
-          @click="buttonProps.onClick"
-        >
-          <i class="pi pi-cog" />
-        </BaseButton>
-      </template>
-      <template #header="headerProps">
-        <span>Settings</span>
-        <BaseButton
-          class="icon-button icon-button--close"
-          @click="headerProps.onClickCancel"
-        >
-          <i class="pi pi-times" />
-        </BaseButton>
-      </template>
-      <template #default> </template>
-    </BaseModal>
+
+    <PreferencesModal />
   </header>
 </template>
 
@@ -139,31 +114,5 @@ nav {
   dark:text-green-500
   border-b
   dark:border-b-green-500;
-}
-
-.icon-button {
-  @apply p-[0.5em]
-    leading-none
-    rounded-full
-    bg-transparent
-    dark:text-green-500
-    aspect-square
-    transition-transform
-    duration-200
-    ease-in-out
-    w-[1em]
-    box-content;
-
-  &.icon-button--lg {
-    @apply text-2xl;
-  }
-
-  &.icon-button--close {
-    @apply mr-[-0.5em];
-  }
-
-  &:not([disabled]) {
-    @apply hover:rotate-90 hover:dark:text-green-400 hover:dark:bg-neutral-800;
-  }
 }
 </style>
