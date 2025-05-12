@@ -1,9 +1,12 @@
+import { fileURLToPath, URL } from 'node:url'
+
+import { defineConfig, loadEnv } from 'vite'
+import vueDevTools from 'vite-plugin-vue-devtools'
+
 import tailwindcss from '@tailwindcss/vite'
 import vue from '@vitejs/plugin-vue'
 import vueJsx from '@vitejs/plugin-vue-jsx'
-import { fileURLToPath, URL } from 'node:url'
-import { defineConfig, loadEnv } from 'vite'
-import vueDevTools from 'vite-plugin-vue-devtools'
+
 import { PROXY_API } from './src/constans'
 
 // https://vite.dev/config/
@@ -20,6 +23,7 @@ export default defineConfig(({ mode }) => {
       tailwindcss(),
     ],
     server: {
+      host: true,
       port: Number(envs.VITE_PORT),
       proxy: {
         [PROXY_API]: {
