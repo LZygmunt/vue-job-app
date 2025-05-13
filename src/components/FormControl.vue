@@ -63,8 +63,9 @@ const isToggle = computed(() => props.type === 'toggle')
 
 const actualVariant = computed(() => props.variant ?? (isCheckbox.value ? 'inline' : 'stacked'))
 const actualWidth = computed(() => inputPropsWithAttrs.value.width ?? 'auto')
-const wrapperClasses = computed(() =>
-  actualVariant.value === 'inline' ? `grid-cols-[1fr_${actualWidth.value}] items-center` : '',
+const wrapperClasses = computed(() => (actualVariant.value === 'inline' ? `items-center` : ''))
+const wrapperStyle = computed(() =>
+  actualVariant.value === 'inline' ? `grid-template-columns: 1fr ${actualWidth.value};` : '',
 )
 </script>
 
@@ -72,6 +73,7 @@ const wrapperClasses = computed(() =>
   <div
     class="grid gap-2 text-gray-700 dark:text-white"
     :class="wrapperClasses"
+    :style="wrapperStyle"
   >
     <BaseLabel
       v-if="props.label"
