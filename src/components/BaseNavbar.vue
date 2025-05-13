@@ -8,8 +8,6 @@ import {
   JOBS_ROUTE_NAME,
 } from '#/router/jobsRouteRecord.ts'
 
-import PreferencesModal from './PreferencesModal.vue'
-
 const route = useRoute()
 
 const isJobsActive = computed(() => {
@@ -60,8 +58,6 @@ const isJobsActive = computed(() => {
       />
       <span>Vue Jobs</span>
     </h2>
-
-    <PreferencesModal />
   </header>
 </template>
 
