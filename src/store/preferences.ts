@@ -1,18 +1,22 @@
 import { ref } from 'vue'
 
+import { type BasicColorSchema, useColorMode } from '@vueuse/core'
 import { defineStore } from 'pinia'
 
 import { MAXIMIZE_TIMEOUT, MINIMIZE_TIMEOUT, RESET_CLICK_TIMESTAMP_TIMEOUT } from '#/constans.ts'
 
 export const usePreferencesStore = defineStore('preferences', () => {
-  type ThemeMode = 'light' | 'dark' | 'system'
+  const themeMode = useColorMode({
+    attribute: 'theme',
+    storageKey: 'vue-jobs-theme-mode',
+    emitAuto: true,
+  })
 
-  const themeMode = ref<ThemeMode>('system')
   const minimizeTimeout = ref(MINIMIZE_TIMEOUT)
   const maximizeTimeout = ref(MAXIMIZE_TIMEOUT)
   const resetClickRegisterTimeout = ref(RESET_CLICK_TIMESTAMP_TIMEOUT)
 
-  const toggleThemeMode = (newMode: ThemeMode) => {
+  const toggleThemeMode = (newMode: BasicColorSchema) => {
     themeMode.value = newMode
   }
 

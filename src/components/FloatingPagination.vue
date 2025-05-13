@@ -1,12 +1,11 @@
 <script setup lang="ts">
-import { inject, ref, toRefs, useTemplateRef } from 'vue'
+import { inject, ref, toRefs, toValue, useTemplateRef } from 'vue'
 
 import { useCurrentPage } from '#/composables/useCurrentPage.ts'
 import { usePagination } from '#/composables/usePagination.ts'
 import { useTimeout } from '#/composables/useTimeout.ts'
 import { MAXIMIZE_TIMEOUT, MINIMIZE_TIMEOUT, RESET_CLICK_TIMESTAMP_TIMEOUT } from '#/constans.ts'
 import { PaginationTimeoutsKey } from '#/keys.ts'
-import { deepUnref } from '#/utils/deepUnref.ts'
 
 export interface FloatingPaginationProps {
   lastPage?: number
@@ -18,15 +17,10 @@ const props = withDefaults(defineProps<FloatingPaginationProps>(), {
 const { lastPage } = toRefs(props)
 
 const paginationTimeouts = inject(PaginationTimeoutsKey, {
-  maximizeTimeout: MAXIMIZE_TIMEOUT,
-  minimizeTimeout: MINIMIZE_TIMEOUT,
+  minimizeTimeout: MAXIMIZE_TIMEOUT,
+  maximizeTimeout: MINIMIZE_TIMEOUT,
   resetClickRegisterTimeout: RESET_CLICK_TIMESTAMP_TIMEOUT,
 })
-const {
-  maximizeTimeout = MAXIMIZE_TIMEOUT,
-  minimizeTimeout = MINIMIZE_TIMEOUT,
-  resetClickRegisterTimeout = RESET_CLICK_TIMESTAMP_TIMEOUT,
-} = deepUnref(paginationTimeouts)
 
 const floatingPagination = useTemplateRef<HTMLUListElement>('floating-pagination')
 
@@ -38,15 +32,17 @@ const maximizeTimeoutRegister = useTimeout({
   effect: () => {
     isMaximized.value = false
   },
-  delay: minimizeTimeout,
+  delay: toValue(paginationTimeouts?.minimizeTimeout)!,
 })
 
 const clickTimeoutRegister = useTimeout({
-  condition: () => !!clickTimestamp.value && Date.now() - clickTimestamp.value < maximizeTimeout,
+  condition: () =>
+    !!clickTimestamp.value
+    && Date.now() - clickTimestamp.value < toValue(paginationTimeouts?.maximizeTimeout)!,
   effect: () => {
     clickTimestamp.value = null
   },
-  delay: resetClickRegisterTimeout,
+  delay: toValue(paginationTimeouts?.resetClickRegisterTimeout)!,
 })
 
 const onEnterPagination = () => {
@@ -55,7 +51,7 @@ const onEnterPagination = () => {
     effect: () => {
       isMaximized.value = true
     },
-    delay: maximizeTimeout,
+    delay: toValue(paginationTimeouts?.maximizeTimeout),
   })
 }
 

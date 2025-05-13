@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { computed, provide } from 'vue'
 
+import { storeToRefs } from 'pinia'
+
 import type { SearchParams } from '#/api/utils/utilTypes.ts'
 import JobBrowseSection from '#/components/JobBrowseSection.vue'
 import { useCurrentPage } from '#/composables/useCurrentPage.ts'
@@ -18,10 +20,12 @@ const searchParams = computed(
 )
 
 const preferencesStore = usePreferencesStore()
+const { minimizeTimeout, maximizeTimeout, resetClickRegisterTimeout } =
+  storeToRefs(preferencesStore)
 provide(PaginationTimeoutsKey, {
-  minimizeTimeout: preferencesStore.minimizeTimeout,
-  maximizeTimeout: preferencesStore.maximizeTimeout,
-  resetClickRegisterTimeout: preferencesStore.resetClickRegisterTimeout,
+  minimizeTimeout,
+  maximizeTimeout,
+  resetClickRegisterTimeout,
 })
 </script>
 

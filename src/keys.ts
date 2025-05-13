@@ -1,6 +1,6 @@
 import type { InjectionKey } from 'vue'
 
-import type { DeepMaybeRefOrGetter } from './utilityTypes.ts'
+import type { NestMaybeRefOrGetter } from './utilityTypes.ts'
 
 export interface PaginationTimeouts {
   minimizeTimeout?: number
@@ -9,5 +9,5 @@ export interface PaginationTimeouts {
 }
 
 export const PaginationTimeoutsKey = Symbol('PaginationTimeoutsKey') as InjectionKey<
-  DeepMaybeRefOrGetter<PaginationTimeouts>
+  NestMaybeRefOrGetter<PaginationTimeouts>
 >
