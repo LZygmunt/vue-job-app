@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import { usePreferencesStore } from '#/store/preferences.ts'
 
-import BaseButton from './BaseButton.vue'
 import BaseModal from './BaseModal.vue'
 import FormControl from './FormControl.vue'
+import IconButton from './IconButton.vue'
 
 const preferencesStore = usePreferencesStore()
 const themeModeOptions = [
@@ -16,21 +16,22 @@ const themeModeOptions = [
 <template>
   <BaseModal :contentProps="{ class: 'bg-gray-100 dark:bg-gray-500/20 p-6 w-full min-w-2xl' }">
     <template #button="buttonProps">
-      <BaseButton
-        class="icon-button icon-button--lg"
+      <IconButton
+        class="text-2xl leading-none"
+        srText="Preferences"
         @click="buttonProps.onClick"
       >
         <i class="pi pi-cog" />
-      </BaseButton>
+      </IconButton>
     </template>
     <template #header="headerProps">
       <span>Settings</span>
-      <BaseButton
-        class="icon-button icon-button--close"
+      <IconButton
+        srText="Close"
         @click="headerProps.onClickCancel"
       >
         <i class="pi pi-times" />
-      </BaseButton>
+      </IconButton>
     </template>
     <template #default>
       <div class="flex flex-col gap-2 w-full">
@@ -71,30 +72,3 @@ const themeModeOptions = [
     </template>
   </BaseModal>
 </template>
-
-<style scoped>
-@reference '#/assets/main.css';
-
-.icon-button {
-  @apply p-[0.5em]
-  leading-none
-  rounded-full
-  bg-transparent
-  dark:text-green-500
-  aspect-square
-  transition-transform
-  duration-200
-  ease-in-out
-  w-[1em]
-  box-content
-  text-inherit;
-
-  &.icon-button--lg {
-    @apply text-2xl;
-  }
-
-  &:not([disabled]) {
-    @apply hover:rotate-90 hover:bg-green-800 hover:dark:text-green-400 hover:dark:bg-neutral-800;
-  }
-}
-</style>

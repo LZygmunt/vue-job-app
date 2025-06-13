@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { computed, ref, useTemplateRef } from 'vue'
 
+import Button from './Button.vue'
+
 interface TruncateTextProps {
   maxLines?: number
 }
@@ -32,13 +34,15 @@ const stylesObject = computed(() =>
     >
       <slot></slot>
     </span>
-    <button
+    <Button
       v-if="isClamped"
-      class="text-green-500 hover:text-green-600"
+      appearance="text"
+      size="small"
+      class="-ml-2"
       @click="toggleExpanded"
     >
       {{ isExpanded ? 'Less' : 'More' }}
-    </button>
+    </Button>
   </div>
 </template>
 

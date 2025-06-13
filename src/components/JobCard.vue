@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import JobCardFooter from '#/components/JobCardFooter.vue'
-import JobLocation from '#/components/JobLocation.vue'
-import BaseLinkButton from './BaseLinkButton.vue'
+import JobCardFooter from './JobCardFooter.vue'
 import JobCardWrapper from './JobCardWrapper.vue'
+import JobLocation from './JobLocation.vue'
+import LinkButton from './LinkButton.vue'
 import TruncateText from './TruncateText.vue'
 
 export interface JobOffer {
@@ -37,12 +37,9 @@ const { title, type, location, description, salary, id } = defineProps<JobCardPr
           <JobLocation>{{ location }}</JobLocation>
         </template>
         <template #readMore>
-          <BaseLinkButton :to="`/jobs/${id}`">
-            Read More
-          </BaseLinkButton>
+          <LinkButton :to="`/jobs/${id}`"> Read More </LinkButton>
         </template>
       </JobCardFooter>
     </template>
   </JobCardWrapper>
 </template>
-

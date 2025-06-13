@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import ActionCard from '#/components/ActionCard.vue'
 import BaseBanner from '#/components/BaseBanner.vue'
-import BaseLinkButton from '#/components/BaseLinkButton.vue'
 import JobBrowseSection from '#/components/JobBrowseSection.vue'
+import LinkButton from '#/components/LinkButton.vue'
 </script>
 
 <template>
@@ -20,24 +20,24 @@ import JobBrowseSection from '#/components/JobBrowseSection.vue'
         description="Browse our Vue jobs and start your career today"
         variant="secondary"
       >
-        <BaseLinkButton
+        <LinkButton
           class="mt-2"
           to="/jobs"
           variant="secondary"
         >
           Browse Jobs
-        </BaseLinkButton>
+        </LinkButton>
       </ActionCard>
       <ActionCard
         title="For Employers"
         description="List your job to find the perfect developer for the role "
       >
-        <BaseLinkButton
+        <LinkButton
           class="mt-2"
           to="/jobs/add"
         >
           Add Job
-        </BaseLinkButton>
+        </LinkButton>
       </ActionCard>
     </section>
     <JobBrowseSection
@@ -45,21 +45,13 @@ import JobBrowseSection from '#/components/JobBrowseSection.vue'
       :disablePagination="true"
     />
     <section class="text-center py-8">
-      <BaseLinkButton
-        class="view-all-button w-1/3"
+      <LinkButton
+        class="py-4 w-1/3"
         to="/jobs"
         variant="secondary"
       >
         View All Jobs
-      </BaseLinkButton>
     </section>
+      </LinkButton>
   </main>
 </template>
-
-<style scoped>
-@reference '#/assets/main.css';
-
-.view-all-button {
-  @apply py-4;
-}
-</style>

@@ -1,8 +1,10 @@
 <script setup lang="ts">
-import { type Emit, type Job, JOB_SALARY, JOB_TYPE } from './JobTypes.ts'
 import { type FormHTMLAttributes, reactive, watchEffect } from 'vue'
-import BaseButton from './BaseButton.vue'
+
+import Button from './Button.vue'
 import FormControl from './FormControl.vue'
+import { type Emit, type Job, JOB_SALARY, JOB_TYPE } from './JobTypes.ts'
+
 import type { Options } from './typesField'
 
 interface JobManageFormProps {
@@ -145,11 +147,12 @@ watchEffect(() => {
       placeholder="Optional phone for applicants"
     />
 
-    <BaseButton
+    <Button
+      variant="success"
       class="w-full"
       type="submit"
     >
       Save
-    </BaseButton>
+    </Button>
   </form>
 </template>

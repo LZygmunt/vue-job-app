@@ -2,9 +2,10 @@
 import { watchEffect } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useToast } from 'vue-toastification'
+
 import useDeleteJob from '#/api/useDeleteJob.ts'
 import useGetJobById from '#/api/useGetJobById.ts'
-import BaseButton from '#/components/BaseButton.vue'
+import Button from '#/components/Button.vue'
 import JobButtonBack from '#/components/JobButtonBack.vue'
 import JobCardWrapper from '#/components/JobCardWrapper.vue'
 import JobLocation from '#/components/JobLocation.vue'
@@ -150,13 +151,18 @@ watchEffect(() => {
     <JobCardWrapper class="details__buttons">
       <template #mainDetails>
         <span class="font-bold text-xl">Manage Job</span>
-        <BaseButton @click="editJobHandler">Edit Job</BaseButton>
-        <BaseButton
-          class="delete-button"
+        <Button
+          variant="success"
+          @click="editJobHandler"
+        >
+          Edit Job
+        </Button>
+        <Button
+          variant="danger"
           @click="deleteJobHandler"
         >
           Delete Job
-        </BaseButton>
+        </Button>
       </template>
     </JobCardWrapper>
   </section>
@@ -196,9 +202,5 @@ watchEffect(() => {
   .details__buttons {
     grid-area: buttons;
   }
-}
-
-.delete-button {
-  @apply bg-red-600 text-neutral-50;
 }
 </style>

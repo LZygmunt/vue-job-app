@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { useRouter } from 'vue-router'
-import BaseButton from './BaseButton.vue'
+
+import Button from './Button.vue'
 
 const router = useRouter()
 
@@ -14,26 +15,11 @@ const goBack = () => {
 </script>
 
 <template>
-  <BaseButton
-    class="job-back-button"
+  <Button
+    class="rounded-t-none border border-t-0 shadow-md"
+    appearance="outline"
     @click="goBack"
   >
     Go back
-  </BaseButton>
+  </Button>
 </template>
-
-<style scoped>
-@reference '#/assets/main.css';
-
-.job-back-button {
-  @apply rounded-t-none
-    border
-    border-t-0
-    border-green-500 shadow-md
-    shadow-green-500/50
-    text-neutral-50
-    bg-green-700
-    dark:text-green-500
-    dark:bg-neutral-900;
-}
-</style>

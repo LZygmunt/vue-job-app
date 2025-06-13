@@ -28,7 +28,6 @@ const toastOptions: PluginOptions = {
   pauseOnHover: true,
   draggable: true,
   draggablePercent: 0.6,
-  toastClassName: 'moje-toast',
 }
 app.use(Toast, toastOptions)
 
