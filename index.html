@@ -4,6 +4,13 @@
     <meta charset="UTF-8">
     <link rel="icon" href="/favicon.ico">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script>
+      const themeFromPreferences = (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+      const theme = localStorage.getItem('vue-jobs-theme-mode')
+      document.documentElement.setAttribute('theme', theme === 'auto' || !theme
+        ? themeFromPreferences
+        : theme);
+    </script>
     <title>Vue job app</title>
   </head>
   <body>

@@ -8,6 +8,7 @@ import {
   JOBS_ROUTE_NAME,
 } from '#/router/jobsRouteRecord.ts'
 
+import LinkButton from './LinkButton.vue'
 import PreferencesModal from './PreferencesModal.vue'
 
 const route = useRoute()
@@ -23,37 +24,47 @@ const isJobsActive = computed(() => {
 
   return route.matched.every((matched) => matched.name && jobsRouteNames.includes(matched.name))
 })
+
+const links = computed(() => [
+  {
+    to: '/',
+    label: 'Home',
+    activeClass: 'no-underline transition-all duration-40 border-b',
+  },
+  {
+    to: '/jobs',
+    label: 'Jobs',
+    class: { 'no-underline transition-all duration-40 border-b': isJobsActive.value },
+  },
+  {
+    to: '/jobs/add',
+    label: 'Add job',
+    activeClass: 'no-underline transition-all duration-40 border-b',
+  },
+])
 </script>
 
 <template>
-  <header>
-    <nav>
-      <RouterLink
-        to="/"
-        class="link"
-        activeClass="active"
+  <header
+    class="grid grid-cols-[1fr_auto_auto] gap-2 items-center px-10 sticky top-0 h-(--navbar-height) z-1 shadow-md border-b bg-(--navbar-bg) text-(--navbar-text) shadow-(color:--navbar-shadow)"
+  >
+    <nav class="flex items-center gap-1">
+      <LinkButton
+        v-for="linkItem in links"
+        :key="linkItem.to"
+        class="px-2 py-1 rounded-xs hover:bg-[var(--navbar-bg-hover)] focus-visible:bg-[var(--navbar-bg-hover)] hover:text-[var(--navbar-text-hover)] focus-visible:text-[var(--navbar-text-hover)]"
+        appearance="text"
+        :to="linkItem.to"
+        :activeClass="linkItem.activeClass"
+        :class="linkItem.class"
       >
-        Home
-      </RouterLink>
-      <RouterLink
-        to="/jobs"
-        class="link"
-        :class="{ active: isJobsActive }"
-      >
-        Jobs
-      </RouterLink>
-      <RouterLink
-        to="/jobs/add"
-        class="link"
-        activeClass="active"
-      >
-        Add job
-      </RouterLink>
+        {{ linkItem.label }}
+      </LinkButton>
     </nav>
-    <h2>
+    <h2 class="flex items-center justify-center gap-3">
       <img
         alt="Vue logo"
-        class="logo"
+        class="drop-shadow-[0_0_5px]"
         src="../assets/logo.svg"
         width="40"
         height="40"
@@ -63,55 +74,3 @@ const isJobsActive = computed(() => {
     <PreferencesModal />
   </header>
 </template>
-
-<style scoped>
-@reference '#/assets/main.css';
-
-header {
-  @apply grid
-    grid-cols-[1fr_auto_auto]
-    gap-2
-    items-center
-    px-10
-    sticky
-    top-0
-    h-(--navbar-height)
-    z-1
-    shadow-md
-    shadow-green-500/50
-    border-b
-    text-neutral-50
-    bg-green-700
-    border-b-green-500
-    dark:text-green-500
-    dark:bg-neutral-900;
-}
-
-h2 {
-  @apply flex items-center justify-center gap-3;
-}
-
-nav {
-  @apply flex
-    items-center
-    gap-1;
-
-  .link {
-    @apply px-2
-      py-1
-      rounded-xs
-      hover:bg-green-800
-      hover:dark:text-green-400
-      hover:dark:bg-neutral-800;
-  }
-}
-
-.link.active {
-  @apply no-underline
-  transition-all
-  duration-40
-  dark:text-green-500
-  border-b
-  dark:border-b-green-500;
-}
-</style>

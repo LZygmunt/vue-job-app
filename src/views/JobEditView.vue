@@ -1,9 +1,10 @@
 <script setup lang="ts">
-import useGetJobById from '#/api/useGetJobById.ts'
 import { watchEffect } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useToast } from 'vue-toastification'
+
 import useEditJob from '#/api/useEditJob.ts'
+import useGetJobById from '#/api/useGetJobById.ts'
 import BaseCard from '#/components/BaseCard.vue'
 import BaseSection from '#/components/BaseSection.vue'
 import BaseTitle from '#/components/BaseTitle.vue'

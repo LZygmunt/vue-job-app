@@ -11,9 +11,10 @@ const { maxLines = 3 } = defineProps<TruncateTextProps>()
 const isExpanded = ref(false)
 const elementToClamp = useTemplateRef('truncate-text')
 
-const isClamped = computed(() => {
-  return elementToClamp.value && elementToClamp.value.scrollHeight > elementToClamp.value.clientHeight
-})
+const isClamped = computed(
+  () =>
+    elementToClamp.value && elementToClamp.value.scrollHeight > elementToClamp.value.clientHeight,
+)
 const toggleExpanded = () => {
   isExpanded.value = !isExpanded.value
 }
@@ -29,7 +30,7 @@ const stylesObject = computed(() =>
   <div>
     <span
       ref="truncate-text"
-      class="truncate-text"
+      class="line-clamp-1 transition-all h-auto"
       :style="stylesObject"
     >
       <slot></slot>
@@ -45,9 +46,3 @@ const stylesObject = computed(() =>
     </Button>
   </div>
 </template>
-
-<style scoped>
-.truncate-text {
-  @apply line-clamp-1 !transition-all h-auto;
-}
-</style>

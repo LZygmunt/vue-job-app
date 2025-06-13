@@ -6,15 +6,12 @@ import LinkButton from '#/components/LinkButton.vue'
 </script>
 
 <template>
-  <main
-    id="home-view"
-    title="Home"
-  >
+  <main id="home-view">
     <BaseBanner
       title="Become a Vue dev"
       desc="Find the Vue job that fills your skills and needs"
     />
-    <section class="w-full max-w-7/8 mx-auto my-6 grid grid-cols-2 gap-4">
+    <article class="w-full max-w-7/8 mx-auto my-6 grid grid-cols-2 gap-4">
       <ActionCard
         title="For developers"
         description="Browse our Vue jobs and start your career today"
@@ -39,19 +36,19 @@ import LinkButton from '#/components/LinkButton.vue'
           Add Job
         </LinkButton>
       </ActionCard>
-    </section>
+    </article>
     <JobBrowseSection
       :limit="3"
       :disablePagination="true"
     />
-    <section class="text-center py-8">
+    <article class="text-center py-8">
       <LinkButton
         class="py-4 w-1/3"
         to="/jobs"
         variant="secondary"
       >
         View All Jobs
-    </section>
       </LinkButton>
+    </article>
   </main>
 </template>

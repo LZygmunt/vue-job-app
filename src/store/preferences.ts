@@ -10,8 +10,8 @@ export const usePreferencesStore = defineStore('preferences', () => {
     attribute: 'theme',
     storageKey: 'vue-jobs-theme-mode',
     emitAuto: true,
+    disableTransition: false,
   })
-
   const minimizeTimeout = ref(MINIMIZE_TIMEOUT)
   const maximizeTimeout = ref(MAXIMIZE_TIMEOUT)
   const resetClickRegisterTimeout = ref(RESET_CLICK_TIMESTAMP_TIMEOUT)

@@ -171,10 +171,6 @@ watchEffect(() => {
 <style scoped>
 @reference '#/assets/main.css';
 
-.back-button-container {
-  @apply px-10 sticky top-(--navbar-height) h-0;
-}
-
 .details {
   @apply container
     grid
