@@ -49,7 +49,7 @@ watchEffect(() => {
 </script>
 
 <template>
-  <section class="back-button-container">
+  <section class="px-10 sticky top-(--navbar-height) h-0">
     <JobButtonBack />
   </section>
   <section class="details">
@@ -107,7 +107,7 @@ watchEffect(() => {
           />
           <span
             v-else
-            class="font-bold text-lg rounded-xs bg-green-300/20 px-2 py-1"
+            class="font-bold text-lg rounded-xs px-2 py-1 bg-primary/20"
             >{{ data?.company?.contactEmail }}</span
           >
           <span class="font-bold text-2xl">Contact Phone:</span>
@@ -117,7 +117,7 @@ watchEffect(() => {
           />
           <span
             v-else
-            class="font-bold text-lg rounded-xs bg-green-300/20 px-2 py-1"
+            class="font-bold text-lg rounded-xs px-2 py-1 bg-primary/20"
             :class="data?.company?.contactPhone ? '' : 'italic'"
             >{{ data?.company?.contactPhone || 'No data' }}</span
           >
@@ -126,7 +126,7 @@ watchEffect(() => {
     </JobCardWrapper>
     <JobCardWrapper class="details__description">
       <template #mainDetails>
-        <span class="font-bold text-xl text-green-500">Job Description</span>
+        <span class="font-bold text-xl text-primary">Job Description</span>
         <div
           v-if="isLoading"
           class="h-2 w-28 rounded bg-stone-400"
@@ -136,7 +136,7 @@ watchEffect(() => {
           class="text-lg"
           >{{ data?.description }}</span
         >
-        <span class="font-bold text-xl text-green-500">Salary</span>
+        <span class="font-bold text-xl text-primary">Salary</span>
         <div
           v-if="isLoading"
           class="h-2 w-28 rounded bg-stone-400"

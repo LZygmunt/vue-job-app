@@ -1,24 +1,21 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { useAttrs } from 'vue'
+import { computed } from 'vue'
+
+import { type ClassNameValue, twMerge } from 'tailwind-merge'
+
+const { class: className, ...attrs } = useAttrs()
+
+const cardClass = computed(() =>
+  twMerge('p-4 rounded-md shadow-md border bg-surface-dark/20', className as ClassNameValue),
+)
+</script>
 
 <template>
-  <div class="card">
+  <div
+    :class="cardClass"
+    v-bind="attrs"
+  >
     <slot></slot>
   </div>
 </template>
-
-<style scoped>
-@reference '#/assets/main.css';
-
-.card {
-  @apply p-4
-    rounded-md
-    shadow-md
-    shadow-white
-    dark:shadow-neutral-900
-    border
-    border-white
-    dark:border-neutral-900
-    bg-white
-    dark:bg-neutral-700;
-}
-</style>

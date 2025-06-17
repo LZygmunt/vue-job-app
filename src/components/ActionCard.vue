@@ -1,5 +1,8 @@
 <script setup lang="ts">
-import { reactive } from 'vue'
+import { computed } from 'vue'
+
+import { twMerge } from 'tailwind-merge'
+
 import BaseCard from './BaseCard.vue'
 
 interface ActionCardProps {
@@ -9,7 +12,14 @@ interface ActionCardProps {
   class?: string
 }
 const { title, description, variant = 'primary', class: className } = defineProps<ActionCardProps>()
-const baseCardClass = reactive(['base-card', { 'base-card--secondary': variant === 'secondary' }, className])
+const baseCardClass = computed(() =>
+  twMerge(
+    'flex flex-col items-start gap-2',
+    (!variant || variant === 'primary') && 'bg-primary/20',
+    variant === 'secondary' && 'bg-secondary/20 dark:text-on-secondary text-secondary',
+    className,
+  ),
+)
 </script>
 
 <template>
@@ -19,22 +29,3 @@ const baseCardClass = reactive(['base-card', { 'base-card--secondary': variant =
     <slot></slot>
   </BaseCard>
 </template>
-
-<style scoped>
-@reference '#/assets/main.css';
-
-.base-card {
-  @apply flex
-    flex-col
-    items-start
-    gap-2
-    text-neutral-900
-    bg-green-500/20
-    dark:bg-green-300/20
-    dark:text-neutral-50;
-
-  &.base-card--secondary {
-    @apply bg-gray-100 dark:bg-neutral-700;
-  }
-}
-</style>

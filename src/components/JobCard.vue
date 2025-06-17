@@ -29,7 +29,7 @@ const { title, type, location, description, salary, id } = defineProps<JobCardPr
       <TruncateText>{{ description }}</TruncateText>
     </template>
     <template #salary>
-      <span class="text-green-500">{{ salary }}</span>
+      <span class="text-primary">{{ salary }}</span>
     </template>
     <template #footer>
       <JobCardFooter>

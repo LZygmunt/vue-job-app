@@ -14,7 +14,7 @@ import BaseCard from './BaseCard.vue'
       <slot name="salary"></slot>
       <hr
         v-if="$slots.footer"
-        class="my-4 border-gray-500"
+        class="my-4"
       />
       <slot name="footer"></slot>
     </div>
