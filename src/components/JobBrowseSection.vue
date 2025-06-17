@@ -28,22 +28,22 @@ const searchParamsProps = defineProps<JobBrowseSectionProps>()
             class="animate-pulse"
           >
             <template #mainDetails>
-              <div class="h-2 w-1/5 rounded bg-stone-400" />
-              <div class="h-4 w-3/5 rounded bg-stone-400" />
-              <div class="h-2 rounded bg-stone-400" />
-              <div class="h-2 rounded bg-stone-400" />
-              <div class="h-2 rounded bg-stone-400" />
+              <div class="h-2 w-1/5 rounded bg-secondary-light" />
+              <div class="h-4 w-3/5 rounded bg-secondary-light" />
+              <div class="h-2 rounded bg-secondary-light" />
+              <div class="h-2 rounded bg-secondary-light" />
+              <div class="h-2 rounded bg-secondary-light" />
             </template>
             <template #salary>
-              <div class="h-2 w-40 rounded bg-stone-400 mt-8" />
+              <div class="h-2 w-40 rounded bg-secondary-light mt-8" />
             </template>
             <template #footer>
               <JobCardFooter>
                 <template #location>
-                  <div class="h-2 w-28 rounded bg-stone-400" />
+                  <div class="h-2 w-28 rounded bg-secondary-light" />
                 </template>
                 <template #readMore>
-                  <div class="h-4 w-28 rounded bg-stone-400" />
+                  <div class="h-4 w-28 rounded bg-secondary-light" />
                 </template>
               </JobCardFooter>
             </template>

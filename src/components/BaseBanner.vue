@@ -6,9 +6,7 @@ interface BaseBannerProps {
 const { title, desc } = defineProps<BaseBannerProps>()
 </script>
 <template>
-  <div
-    class="flex flex-col items-center justify-center p-16 text-neutral-50 bg-green-700 dark:text-green-500 dark:bg-transparent"
-  >
+  <div class="flex flex-col items-center justify-center p-16">
     <span class="text-6xl font-semibold p-4">
       {{ title }}
     </span>

@@ -7,12 +7,12 @@ const { name, required } = defineProps<FieldProps>()
 <template>
   <label
     :for="name"
-    class="text-gray-700 dark:text-white font-bold"
+    class="font-bold text-primary"
   >
     <slot></slot>
     <span
       v-if="required"
-      class="text-red-500"
+      class="text-error"
     >
       *
     </span>

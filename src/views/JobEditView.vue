@@ -81,48 +81,48 @@ watchEffect(() => {
         class="space-y-6"
       >
         <div class="space-y-4">
-          <div class="h-2 w-28 rounded bg-stone-400"></div>
-          <div class="h-4 w-full rounded bg-stone-400"></div>
+          <div class="h-2 w-28 rounded bg-secondary-light"></div>
+          <div class="h-4 w-full rounded bg-secondary-light"></div>
         </div>
 
         <div class="space-y-4">
-          <div class="h-2 w-28 rounded bg-stone-400"></div>
-          <div class="h-4 w-full rounded bg-stone-400"></div>
+          <div class="h-2 w-28 rounded bg-secondary-light"></div>
+          <div class="h-4 w-full rounded bg-secondary-light"></div>
         </div>
 
         <div class="space-y-4">
-          <div class="h-2 w-28 rounded bg-stone-400"></div>
-          <div class="h-8 w-full rounded bg-stone-400"></div>
+          <div class="h-2 w-28 rounded bg-secondary-light"></div>
+          <div class="h-8 w-full rounded bg-secondary-light"></div>
         </div>
 
         <div class="space-y-4">
-          <div class="h-2 w-28 rounded bg-stone-400"></div>
-          <div class="h-4 w-full rounded bg-stone-400"></div>
+          <div class="h-2 w-28 rounded bg-secondary-light"></div>
+          <div class="h-4 w-full rounded bg-secondary-light"></div>
         </div>
 
         <div class="space-y-4">
-          <div class="h-2 w-28 rounded bg-stone-400"></div>
-          <div class="h-4 w-full rounded bg-stone-400"></div>
+          <div class="h-2 w-28 rounded bg-secondary-light"></div>
+          <div class="h-4 w-full rounded bg-secondary-light"></div>
         </div>
 
         <div class="space-y-4">
-          <div class="h-2 w-28 rounded bg-stone-400"></div>
-          <div class="h-4 w-full rounded bg-stone-400"></div>
+          <div class="h-2 w-28 rounded bg-secondary-light"></div>
+          <div class="h-4 w-full rounded bg-secondary-light"></div>
         </div>
 
         <div class="space-y-4">
-          <div class="h-2 w-28 rounded bg-stone-400"></div>
-          <div class="h-8 w-full rounded bg-stone-400"></div>
+          <div class="h-2 w-28 rounded bg-secondary-light"></div>
+          <div class="h-8 w-full rounded bg-secondary-light"></div>
         </div>
 
         <div class="space-y-4">
-          <div class="h-2 w-28 rounded bg-stone-400"></div>
-          <div class="h-4 w-full rounded bg-stone-400"></div>
+          <div class="h-2 w-28 rounded bg-secondary-light"></div>
+          <div class="h-4 w-full rounded bg-secondary-light"></div>
         </div>
 
         <div class="space-y-4">
-          <div class="h-2 w-28 rounded bg-stone-400"></div>
-          <div class="h-4 w-full rounded bg-stone-400"></div>
+          <div class="h-2 w-28 rounded bg-secondary-light"></div>
+          <div class="h-4 w-full rounded bg-secondary-light"></div>
         </div>
       </div>
       <JobManageForm

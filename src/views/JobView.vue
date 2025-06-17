@@ -57,12 +57,12 @@ watchEffect(() => {
       <template #mainDetails>
         <div
           v-if="isLoading"
-          class="h-2 w-1/5 rounded bg-stone-400"
+          class="h-2 w-1/5 rounded bg-secondary-light"
         />
         <span v-else>{{ data?.type }}</span>
         <div
           v-if="isLoading"
-          class="h-4 w-3/5 rounded bg-stone-400"
+          class="h-4 w-3/5 rounded bg-secondary-light"
         />
         <span
           v-else
@@ -71,7 +71,7 @@ watchEffect(() => {
         >
         <div
           v-if="isLoading"
-          class="h-2 w-28 rounded bg-stone-400"
+          class="h-2 w-28 rounded bg-secondary-light"
         />
         <JobLocation v-else>{{ data?.location }}</JobLocation>
       </template>
@@ -81,7 +81,7 @@ watchEffect(() => {
         <span class="font-bold text-xl">Company Info</span>
         <div
           v-if="isLoading"
-          class="h-2 w-28 rounded bg-stone-400"
+          class="h-2 w-28 rounded bg-secondary-light"
         />
         <span
           v-else
@@ -90,7 +90,7 @@ watchEffect(() => {
         >
         <div
           v-if="isLoading"
-          class="h-2 w-28 rounded bg-stone-400"
+          class="h-2 w-28 rounded bg-secondary-light"
         />
         <span
           v-else
@@ -103,7 +103,7 @@ watchEffect(() => {
           <span class="font-bold text-2xl">Contact Email:</span>
           <span
             v-if="isLoading"
-            class="h-2 w-28 rounded bg-stone-400"
+            class="h-2 w-28 rounded bg-secondary-light"
           />
           <span
             v-else
@@ -113,7 +113,7 @@ watchEffect(() => {
           <span class="font-bold text-2xl">Contact Phone:</span>
           <span
             v-if="isLoading"
-            class="h-2 w-28 rounded bg-stone-400"
+            class="h-2 w-28 rounded bg-secondary-light"
           />
           <span
             v-else
@@ -129,7 +129,7 @@ watchEffect(() => {
         <span class="font-bold text-xl text-primary">Job Description</span>
         <div
           v-if="isLoading"
-          class="h-2 w-28 rounded bg-stone-400"
+          class="h-2 w-28 rounded bg-secondary-light"
         />
         <span
           v-else
@@ -139,7 +139,7 @@ watchEffect(() => {
         <span class="font-bold text-xl text-primary">Salary</span>
         <div
           v-if="isLoading"
-          class="h-2 w-28 rounded bg-stone-400"
+          class="h-2 w-28 rounded bg-secondary-light"
         />
         <span
           v-else

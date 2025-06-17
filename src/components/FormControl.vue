@@ -71,7 +71,7 @@ const wrapperStyle = computed(() =>
 
 <template>
   <div
-    class="grid gap-2 text-gray-700 dark:text-white"
+    class="grid gap-2 text-on-surface"
     :class="wrapperClasses"
     :style="wrapperStyle"
   >
