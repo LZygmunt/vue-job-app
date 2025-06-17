@@ -34,7 +34,7 @@ const links = computed(() => [
   {
     to: '/jobs',
     label: 'Jobs',
-    class: { 'no-underline transition-all duration-40 border-b': isJobsActive.value },
+    class: isJobsActive.value && 'no-underline transition-all duration-40 border-b',
   },
   {
     to: '/jobs/add',
@@ -52,7 +52,7 @@ const links = computed(() => [
       <LinkButton
         v-for="linkItem in links"
         :key="linkItem.to"
-        class="px-2 py-1 rounded-xs hover:bg-[var(--navbar-bg-hover)] focus-visible:bg-[var(--navbar-bg-hover)] hover:text-[var(--navbar-text-hover)] focus-visible:text-[var(--navbar-text-hover)]"
+        class="px-2 py-1 rounded-xs hover:bg-[var(--navbar-bg-hover)] focus-visible:bg-[var(--navbar-bg-hover)] text-inherit hover:text-[var(--navbar-text-hover)] focus-visible:text-[var(--navbar-text-hover)]"
         appearance="text"
         :to="linkItem.to"
         :activeClass="linkItem.activeClass"

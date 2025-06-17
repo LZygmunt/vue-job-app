@@ -119,6 +119,18 @@
 
 }
 
+@custom-variant dark {
+    &:where([theme="dark"] *) {
+        @slot;
+    }
+}
+
+@custom-variant light {
+    &:where([theme="light"] *) {
+        @slot;
+    }
+}
+
 @layer base {
     * {
         @apply transition-colors duration-200;

@@ -14,10 +14,10 @@ const themeModeOptions = [
 </script>
 
 <template>
-  <BaseModal :contentProps="{ class: 'bg-gray-100 dark:bg-gray-500/20 p-6 w-full min-w-2xl' }">
+  <BaseModal :contentProps="{ class: 'p-6 w-full min-w-2xl' }">
     <template #button="buttonProps">
       <IconButton
-        class="text-2xl leading-none"
+        class="text-2xl leading-none text-inherit"
         srText="Preferences"
         @click="buttonProps.onClick"
       >
