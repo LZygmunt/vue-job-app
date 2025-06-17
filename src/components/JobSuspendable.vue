@@ -7,6 +7,9 @@ import FloatingPagination from '#/components/FloatingPagination.vue'
 import JobCard, { type JobOffer, type JobOffers } from '#/components/JobCard.vue'
 import type { DeepMaybeRefOrGetter } from '#/utilityTypes.ts'
 
+import BaseWarning from './BaseWarning.vue'
+import Button from './Button.vue'
+
 export interface JobsSuspendableProps extends SearchParams {
   disablePagination?: boolean
 }
@@ -14,7 +17,7 @@ export interface JobsSuspendableProps extends SearchParams {
 const props = defineProps<JobsSuspendableProps>()
 const { disablePagination, ...searchParamsProps } = toRefs(props)
 
-const { data, suspense } = useGetJobs({
+const { data, suspense, isError } = useGetJobs({
   searchParams: searchParamsProps as DeepMaybeRefOrGetter<SearchParams>,
   select: (data) => {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -29,6 +32,10 @@ const { data, suspense } = useGetJobs({
 
 await suspense()
 const jobs = computed(() => data.value?.jobs ?? ([] as JobOffers))
+
+const onRefresh = () => {
+  window.location.reload()
+}
 </script>
 
 <template>
@@ -37,6 +44,18 @@ const jobs = computed(() => data.value?.jobs ?? ([] as JobOffers))
     :key="job.id"
     v-bind="job"
   />
+  <BaseWarning
+    v-if="isError"
+    class="col-span-3"
+  >
+    <h1 class="text-6xl font-bold mb-4">Something gone wrong</h1>
+    <p class="text-info text-xl mb-5">
+      Please refresh page. If still display nothing, try again later
+    </p>
+    <template #button>
+      <Button @click="onRefresh">Refresh</Button>
+    </template>
+  </BaseWarning>
   <FloatingPagination
     v-if="!disablePagination && data?.lastPage"
     :lastPage="data?.lastPage"

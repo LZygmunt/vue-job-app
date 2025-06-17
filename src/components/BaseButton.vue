@@ -52,22 +52,22 @@ const buttonClasses = computed(() =>
     isOutline(buttonProps.appearance) && 'bg-transparent border-1',
     isOutline(buttonProps.appearance)
       && isPrimary(buttonProps.variant)
-      && 'border-primary text-primary hover:bg-primary-hover/25 focus-visible:bg-primary-hover/25',
+      && 'border text-primary hover:bg-primary-hover/25 focus-visible:bg-primary-hover/25',
     isOutline(buttonProps.appearance)
       && isSecondary(buttonProps.variant)
-      && 'border-secondary text-secondary hover:bg-secondary-hover/25 focus-visible:bg-secondary-hover/25',
+      && 'border text-secondary hover:bg-secondary-hover/25 focus-visible:bg-secondary-hover/25',
     isOutline(buttonProps.appearance)
       && isSuccess(buttonProps.variant)
-      && 'border-success text-success hover:bg-success-hover/25 focus-visible:bg-success-hover/25',
+      && 'border text-success hover:bg-success-hover/25 focus-visible:bg-success-hover/25',
     isOutline(buttonProps.appearance)
       && isDanger(buttonProps.variant)
-      && 'border-error text-error hover:bg-error-hover/25 focus-visible:bg-error-hover/25',
+      && 'border text-error hover:bg-error-hover/25 focus-visible:bg-error-hover/25',
     isOutline(buttonProps.appearance)
       && isWarning(buttonProps.variant)
-      && 'border-warning text-warning hover:bg-warning-hover/25 focus-visible:bg-warning-hover/25',
+      && 'border text-warning hover:bg-warning-hover/25 focus-visible:bg-warning-hover/25',
     isOutline(buttonProps.appearance)
       && isInfo(buttonProps.variant)
-      && 'border-info text-info hover:bg-info-hover/25 focus-visible:bg-info-hover/25',
+      && 'border text-info hover:bg-info-hover/25 focus-visible:bg-info-hover/25',
     isText(buttonProps.appearance) && 'bg-transparent',
     isText(buttonProps.appearance)
       && isPrimary(buttonProps.variant)
