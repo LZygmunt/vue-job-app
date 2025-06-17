@@ -131,6 +131,12 @@
     }
 }
 
+@custom-variant hover-focus {
+    &:hover, &:focus-visible {
+        @slot;
+    }
+}
+
 @layer base {
     * {
         @apply transition-colors duration-200;

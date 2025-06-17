@@ -20,7 +20,7 @@ const preferencesStore = usePreferencesStore()
 
 <template>
   <Button
-    class="rounded-t-none border-t-0 shadow-md bg-secondary/20 dark:bg-primary/20"
+    class="rounded-t-none border-t-0 shadow-md bg-secondary/20 hover-focus:bg-secondary/40 dark:bg-primary/20 dark:hover-focus:bg-primary/40"
     :variant="preferencesStore.themeMode === 'light' ? 'secondary' : 'primary'"
     appearance="outline"
     @click="goBack"
