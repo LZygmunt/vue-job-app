@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { type HTMLAttributes, toRefs, useSlots, useTemplateRef, watchEffect } from 'vue'
+import { type HTMLAttributes, toRefs, useSlots, useTemplateRef } from 'vue'
 
 type BaseModalSectionProps = HTMLAttributes
 
@@ -38,11 +38,11 @@ const onTriggerCloseDialog = () => {
   <Teleport :to="teleportTarget">
     <dialog
       ref="dialog"
-      class="modal m-auto rounded-lg divide-y-2 divide-green-500 shadow-lg shadow-green-500/50 text-neutral-50 bg-green-700 border-1 border-green-500 dark:bg-neutral-900"
+      class="modal m-auto rounded-lg divide-y-2 shadow-lg border-1 bg-surface text-on-surface backdrop:backdrop-blur-sm"
     >
       <div
         v-if="!disableHeader"
-        class="modal__header p-3 grid grid-cols-[1fr_auto_1fr] gap-1 items-center justify-center dark:text-green-500"
+        class="modal__header p-3 grid grid-cols-[1fr_auto_1fr] gap-1 items-center justify-center"
         v-bind="headerProps"
       >
         <slot
@@ -75,6 +75,7 @@ const onTriggerCloseDialog = () => {
     & :last-child {
       @apply col-3 justify-self-end;
     }
+
     & :nth-last-child(2) {
       @apply col-2;
     }

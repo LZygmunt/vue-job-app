@@ -45,7 +45,7 @@ const inputProps = computed(() => {
     :id="props.name"
     :value="props.modelValue"
     v-bind="inputProps"
-    class="border rounded py-2 px-3"
+    class="border rounded py-2 px-3 hover-focus:bg-primary-hover/25"
     :class="props.fullWidth && 'w-full'"
     @input="handleInput"
   >

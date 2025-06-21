@@ -9,6 +9,7 @@ import type { ButtonProps } from './ButtonTypes.ts'
 
 interface IconButtonProps extends ButtonProps {
   srText?: string
+  disableRotation?: boolean | 'endIcon' | 'startIcon' | 'default' | 'icons'
 }
 
 const props = withDefaults(defineProps<IconButtonProps>(), {
@@ -19,6 +20,7 @@ const props = withDefaults(defineProps<IconButtonProps>(), {
   type: 'button',
   iconPosition: 'only',
   srText: '',
+  disableRotation: false,
 })
 
 const slots = useSlots()
@@ -29,7 +31,9 @@ const iconLayoutClasses = computed(() =>
     slots.endIcon && 'inline-flex gap-1.5 items-center justify-center',
     !slots.startIcon
       && !slots.endIcon
-      && 'p-[0.5em] leading-none rounded-full aspect-square w-[1em] box-content [&:not([disabled])]:hover:rotate-90 [&:not([disabled])]:focus-visible:rotate-90',
+      && 'p-[0.5em] leading-none rounded-full aspect-square w-[1em] box-content',
+    [false, 'startIcon', 'endIcon', 'icons'].includes(props.disableRotation)
+      && '[&:not([disabled])]:hover-focus:rotate-90',
     props.class,
   ),
 )
@@ -64,7 +68,10 @@ const srOnlyClass = 'sr-only'
       <template v-else>
         <slot
           name="startIcon"
-          class="[&:not([disabled])]:group-hover:rotate-90 [&:not([disabled])]:group-focus-visible:rotate-90"
+          :class="
+            [false, 'default', 'endIcon'].includes(props.disableRotation)
+            && '[&:not([disabled])]:group-hover-focus:rotate-90'
+          "
         ></slot>
         <span
           v-if="!$slots.startIcon && !$slots.endIcon"
@@ -72,14 +79,18 @@ const srOnlyClass = 'sr-only'
         >
           {{ srText }}
         </span>
-        <span v-if="$slots.default">
-          <slot
-            class="[&:not([disabled])]:group-hover:rotate-90 [&:not([disabled])]:group-focus-visible:rotate-90"
-          ></slot>
-        </span>
+        <slot
+          :class="
+            [false, 'startIcon', 'endIcon', 'icons'].includes(props.disableRotation)
+            && '[&:not([disabled])]:group-hover-focus:rotate-90'
+          "
+        ></slot>
         <slot
           name="endIcon"
-          class="[&:not([disabled])]:group-hover:rotate-90 [&:not([disabled])]:group-focus-visible:rotate-90"
+          :class="
+            [false, 'default', 'startIcon'].includes(props.disableRotation)
+            && '[&:not([disabled])]:group-hover-focus:rotate-90'
+          "
         ></slot>
       </template>
     </button>

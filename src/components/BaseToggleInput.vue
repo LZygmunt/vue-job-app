@@ -7,6 +7,9 @@ import { computed } from 'vue'
 
 import { twMerge } from 'tailwind-merge'
 
+import Button from './Button.vue'
+import IconButton from './IconButton.vue'
+
 import type { BaseInputProps } from './BaseInput.vue'
 import type { Option } from './typesField.ts'
 
@@ -41,9 +44,8 @@ const containerClass = computed(() => twMerge('flex items-center', props.fullWid
 const toggleButtonClass = computed(
   () => (option: ToggleOption<TVal>, index: number) =>
     twMerge(
-      'relative flex items-center justify-center px-2.5 py-2 transition-all hover:opacity-80 focus:outline-none focus:ring-2 border overflow-hidden',
-      props.modelValue === option && 'z-1',
-      props.modelValue !== option && 'z-0',
+      'relative flex items-center justify-center px-2.5 py-2 transition-all rounded-none overflow-hidden border-lr-none gap-0',
+      props.modelValue === option.value ? 'z-1 light:bg-primary/20' : 'z-0 text-inherit',
       index === 0 && 'first:rounded-l-md',
       index === props.options.length - 1 && 'last:rounded-r-md',
     ),
@@ -52,28 +54,30 @@ const labelClass = computed(
   () => (option: ToggleOption<TVal>) =>
     twMerge(
       'transition-all duration-300 ease-in-out overflow-hidden whitespace-nowrap',
-      props.modelValue !== option && 'max-w-0 opacity-0',
-      props.modelValue === option && 'max-w-xs opacity-100 pl-2',
+      props.modelValue === option.value ? 'max-w-xs opacity-100 pl-2' : 'max-w-0 opacity-0',
     ),
 )
 </script>
 
 <template>
   <div :class="containerClass">
-    <button
+    <IconButton
       v-for="(option, index) in props.options"
       :key="String(option.value)"
-      :class="toggleButtonClass(option.value, index)"
+      :class="toggleButtonClass(option, index)"
       :title="option.label"
+      appearance="outline"
+      disableRotation
       @click="handleToggle(option.value)"
     >
-      <i
-        v-if="option.icon"
-        :class="option.icon"
-      />
-
-      <span :class="labelClass(option.value)">{{ option.label }}</span>
-    </button>
+      <template #startIcon>
+        <i
+          v-if="option.icon"
+          :class="option.icon"
+        />
+      </template>
+      <span :class="labelClass(option)">{{ option.label }}</span>
+    </IconButton>
   </div>
 </template>
 
