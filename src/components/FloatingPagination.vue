@@ -146,24 +146,24 @@ const { prevPage, prevPageDisabled, nextPage, nextPageDisabled, pages } = usePag
 
   .floating-pagination__list {
     @apply rounded-t-lg
-      dark:bg-neutral-900
-      dark:shadow-neutral-900
+      bg-surface
       w-fit
       text-base
       border-x-1
       border-t-1
-      border-neutral-700
+      border-secondary
+      dark:border-on-surface
       scale-75
       translate-y-1
-      outline-green-700
       hover:shadow-[0_0_75px]
-      hover:shadow-green-500;
+      hover:shadow-primary;
 
     li {
       @apply inline-block
       first-of-type:border-r-1
       last-of-type:border-l-1
-      border-neutral-700;
+      border-secondary
+      dark:border-on-surface;
     }
   }
 
@@ -174,16 +174,17 @@ const { prevPage, prevPageDisabled, nextPage, nextPageDisabled, pages } = usePag
   .floating-pagination__item {
     @apply px-0
       py-0.5
-      text-neutral-50/70
-      hover:text-neutral-50
+      text-secondary
+      dark:text-inherit
+      hover-focus:text-primary/50
       block
       rounded-xs
       focus-visible:outline-2
-      focus-visible:outline-green-700
-      focus-visible:border-green-700/60
-      focus-visible:border-1;
+      focus-visible:border-1
+      focus-visible:outline-primary
+      focus-visible:border-primary;
     &[aria-current] {
-      @apply px-1.5 text-green-500 cursor-default;
+      @apply px-1.5 text-primary font-extrabold cursor-default;
     }
     li:is(:first-of-type, :last-of-type) & {
       @apply px-1;
@@ -194,11 +195,11 @@ const { prevPage, prevPageDisabled, nextPage, nextPageDisabled, pages } = usePag
   }
 
   .floating-pagination__item--dots {
-    @apply hover:text-neutral-50/70;
+    @apply text-secondary;
   }
 
   .floating-pagination__list.floating-pagination__list--maximized {
-    @apply -translate-y-5 rounded-lg scale-125;
+    @apply -translate-y-5 rounded-lg scale-125 border-b-1;
 
     .floating-pagination__item {
       @apply px-1.5;
@@ -215,7 +216,7 @@ const { prevPage, prevPageDisabled, nextPage, nextPageDisabled, pages } = usePag
   }
 
   .floating-pagination__list--focused {
-    @apply outline-2 outline-green-700 border-green-700/60;
+    @apply outline-2 outline-primary border-primary;
   }
 }
 </style>
